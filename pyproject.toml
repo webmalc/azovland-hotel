@@ -4,7 +4,331 @@ version = "0.1.0"
 description = "azovland-hotel website"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = [
-    "django-environ>=0.13.0",
-    "wagtail>=7.3",
+dependencies = ["django-environ>=0.13.0", "wagtail>=7.3"]
+
+[dependency-groups]
+dev = [
+  "bandit>=1.9.3",
+  "ipdb>=0.13.13",
+  "ipython>=9.10.0",
+  "mypy>=1.19.1",
+  "ruff>=0.15.2",
 ]
+
+[tool.pyright]
+typeCheckingMode = "off"
+
+[tool.ruff.lint]
+ignore = [
+  "COM812",
+  "ANN201",
+  "ANN001",
+  "ANN002",
+  "ANN003",
+  "ANN204",
+  "ANN205",
+  "ANN202",
+  "TRY003",
+  "DJ001",
+]
+extend-select = [
+  "ERA",
+  "YTT",
+  "ANN",
+  "ASYNC",
+  "S",
+  "BLE",
+  "B",
+  "A",
+  "COM",
+  "C4",
+  "C4",
+  "T10",
+  "DJ",
+  "FIX",
+  "FA",
+  "ISC",
+  "LOG",
+  "G",
+  "T20",
+  "PT",
+  "Q",
+  "RSE",
+  "RET",
+  "SLF",
+  "SIM",
+  "SLOT",
+  "TID",
+  "TC",
+  "ARG",
+  "PTH",
+  "I",
+  "C90",
+  "N",
+  "PERF",
+  "E",
+  "W",
+  #"D", #pydocstyle
+  "F",
+  "PLC",  #pylint convention
+  "PLE",  #pylint error
+  "PLR",  #pylint refactor
+  "PLW",  #pylint warning
+  "UP",
+  "FURB",
+  "TRY",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"*test*.py" = [
+  "S101",
+  "PLR2004",
+  "S105",
+  "ANN202",
+  "SLF001",
+  "ARG001",
+  "PLR0913",
+  "PLR0915",
+  "PERF401",
+  "S106",
+]
+"__init__.py" = ["F403"]
+"*/migrations/*" = ["ALL"]
+"manage.py" = ["ALL"]
+"*/settings/*.py" = ["PERF401", "PTH118", "ERA001", "PTH120", "E501"]
+
+[tool.mypy]
+follow_imports = "normal"
+
+[[tool.mypy.overrides]]
+module = [
+  "django.*",
+  "pluggy.*",
+  "django_extensions.*",
+  "redis.*",
+  "wagtail.*",
+  "kombu.*",
+  "pytest.*",
+  "_pytest.*",
+  "reversion.*",
+  "rest_framework.*",
+  "rest_framework_extensions.*",
+  "rest_framework_simplejwt.*",
+  "environ.*",
+  "model_utils.*",
+  "magic.*",
+  "debug_toolbar.*",
+  "slugify.*",
+  "celery.*",
+  "imagekit.*",
+  "annoying.*",
+  "django_filters.*",
+  "setuptools.*",
+  "arrow.*",
+  "django_otp.*",
+  "phonenumber_field.*",
+  "adminactions.*",
+  "cities.*",
+  "drf_yasg.*",
+  "pytest_mock.*",
+  "rest_registration.*",
+  "oauthlib.*",
+  "oauth2_provider.*",
+  "admin_auto_filters.*",
+  "rest_framework_gis.*",
+  "drf_extra_fields.*",
+  "adminsortable.*",
+  "modeltranslation.*",
+  "djmoney.*",
+  "moneyed.*",
+  "tqdm.*",
+  "babel.*",
+  "django_elasticsearch_dsl.*",
+  "elasticsearch_dsl.*",
+  "pytest_elasticsearch.*",
+  "push_notifications.*",
+  "translate.*",
+  "phonenumbers.*",
+  "numpy.*",
+  "pytz.*",
+  "requests.*",
+  "ckeditor.*",
+  "rangefilter.*",
+  "ckeditor_uploader.*",
+  "pytest_django.fixtures.*",
+  "dirtyfields.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "az.settings.base.*"
+ignore_errors = true
+
+[tool.bandit]
+skips = ["B311", "B405", "B314"]
+
+exclude_dirs = ["conftest.py", ".venv"]
+
+[tool.bandit.settings]
+# B604 / B605 / B606 / B607 / B602 – shell-related tests
+any-other-function-with-shell-equals-true.shell = [
+  "os.system",
+  "os.popen",
+  "os.popen2",
+  "os.popen3",
+  "os.popen4",
+  "popen2.popen2",
+  "popen2.popen3",
+  "popen2.popen4",
+  "popen2.Popen3",
+  "popen2.Popen4",
+  "commands.getoutput",
+  "commands.getstatusoutput",
+]
+any-other-function-with-shell-equals-true.no-shell = [
+  "os.execl",
+  "os.execle",
+  "os.execlp",
+  "os.execlpe",
+  "os.execv",
+  "os.execve",
+  "os.execvp",
+  "os.execvpe",
+  "os.spawnl",
+  "os.spawnle",
+  "os.spawnlp",
+  "os.spawnlpe",
+  "os.spawnv",
+  "os.spawnve",
+  "os.spawnvp",
+  "os.spawnvpe",
+  "os.startfile",
+]
+any-other-function-with-shell-equals-true.subprocess = [
+  "subprocess.Popen",
+  "subprocess.call",
+  "subprocess.check_call",
+  "subprocess.check_output",
+  "subprocess.run",
+]
+
+# B608 – hardcoded temporary directories
+hardcoded-tmp-directory.tmp-dirs = ["/tmp", "/var/tmp", "/dev/shm"]
+
+# B609 – Linux command wildcard injection (same lists as shell tests)
+linux-commands-wildcard-injection.shell = [
+  "os.system",
+  "os.popen",
+  "os.popen2",
+  "os.popen3",
+  "os.popen4",
+  "popen2.popen2",
+  "popen2.popen3",
+  "popen2.popen4",
+  "popen2.Popen3",
+  "popen2.Popen4",
+  "commands.getoutput",
+  "commands.getstatusoutput",
+]
+linux-commands-wildcard-injection.no-shell = [
+  "os.execl",
+  "os.execle",
+  "os.execlp",
+  "os.execlpe",
+  "os.execv",
+  "os.execve",
+  "os.execvp",
+  "os.execvpe",
+  "os.spawnl",
+  "os.spawnle",
+  "os.spawnlp",
+  "os.spawnlpe",
+  "os.spawnv",
+  "os.spawnve",
+  "os.spawnvp",
+  "os.spawnvpe",
+  "os.startfile",
+]
+linux-commands-wildcard-injection.subprocess = [
+  "subprocess.Popen",
+  "subprocess.call",
+  "subprocess.check_call",
+  "subprocess.check_output",
+  "subprocess.run",
+]
+
+# B502 / B503 – SSL with bad versions/defaults
+ssl-with-bad-defaults.bad-protocol-versions = [
+  "PROTOCOL_SSLv2",
+  "SSLv2_METHOD",
+  "SSLv23_METHOD",
+  "PROTOCOL_SSLv3",
+  "PROTOCOL_TLSv1",
+  "SSLv3_METHOD",
+  "TLSv1_METHOD",
+]
+ssl-with-bad-version.bad-protocol-versions = [
+  "PROTOCOL_SSLv2",
+  "SSLv2_METHOD",
+  "SSLv23_METHOD",
+  "PROTOCOL_SSLv3",
+  "PROTOCOL_TLSv1",
+  "SSLv3_METHOD",
+  "TLSv1_METHOD",
+]
+
+# B605 / B606 / B607 – start process starting tests (they all share the same lists)
+start-process-with-a-shell.shell = [
+  "os.system",
+  "os.popen",
+  "os.popen2",
+  "os.popen3",
+  "os.popen4",
+  "popen2.popen2",
+  "popen2.popen3",
+  "popen2.popen4",
+  "popen2.Popen3",
+  "popen2.Popen4",
+  "commands.getoutput",
+  "commands.getstatusoutput",
+]
+start-process-with-a-shell.no-shell = [
+  "os.execl",
+  "os.execle",
+  "os.execlp",
+  "os.execlpe",
+  "os.execv",
+  "os.execve",
+  "os.execvp",
+  "os.execvpe",
+  "os.spawnl",
+  "os.spawnle",
+  "os.spawnlp",
+  "os.spawnlpe",
+  "os.spawnv",
+  "os.spawnve",
+  "os.spawnvp",
+  "os.spawnvpe",
+  "os.startfile",
+]
+start-process-with-a-shell.subprocess = [
+  "subprocess.Popen",
+  "subprocess.call",
+  "subprocess.check_call",
+  "subprocess.check_output",
+  "subprocess.run",
+]
+
+# The same lists are reused for B602, B603, B606, B607 → Bandit automatically shares them
+
+# B110 / B112 – try/except pass & continue
+try-except-pass.check-typed-exception = false
+try-except-continue.check-typed-exception = false
+
+# B505 – weak cryptographic key sizes
+weak-cryptographic-key.weak-key-size-dsa-high = 1024
+weak-cryptographic-key.weak-key-size-dsa-medium = 2048
+weak-cryptographic-key.weak-key-size-ec-high = 160
+weak-cryptographic-key.weak-key-size-ec-medium = 224
+weak-cryptographic-key.weak-key-size-rsa-high = 1024
+weak-cryptographic-key.weak-key-size-rsa-medium = 2048
