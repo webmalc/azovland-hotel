@@ -55,10 +55,14 @@ else:
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
 
     import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
 
     sentry_sdk.init(
         dsn=env.str("SENTRY"),
+        integrations=[DjangoIntegration()],
         send_default_pii=True,
+        auto_session_tracking=False,
+        traces_sample_rate=0,
     )
 
 
