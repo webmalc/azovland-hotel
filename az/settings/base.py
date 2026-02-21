@@ -47,8 +47,9 @@ if not DEBUG:  # pragma: no cover
     CSRF_COOKIE_SAMESITE = "Strict"
 
     CSRF_COOKIE_SECURE = "Secure"
-# else:
-#     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
+else:
+    INTERNAL_IPS = ["127.0.0.1"]
+    DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
@@ -61,8 +62,7 @@ WAGTAILADMIN_BASE_URL = env("WAGTAILADMIN_BASE_URL")
 # Application definition
 
 INSTALLED_APPS = [
-    "home",
-    "search",
+    # core
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -83,9 +83,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # apps
+    "debug_toolbar",
+    # project
+    "home",
+    "search",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -225,3 +231,48 @@ WAGTAILDOCS_EXTENSIONS = [
     "xlsx",
     "zip",
 ]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": ("[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s"),
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+        },
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        }
+    },
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "logs/app.log",
+            "formatter": "verbose",
+        },
+        "error_file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": "logs/error.log",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "app": {
+            "handlers": ["file", "error_file"],
+            "level": "DEBUG",
+        },
+        # "django": {
+        #     "handlers": ["error_file"],
+        #     "level": "ERROR",
+        # },
+        # "wagtail": {
+        #     "handlers": ["error_file"],
+        #     "level": "ERROR",
+        # },
+    },
+}

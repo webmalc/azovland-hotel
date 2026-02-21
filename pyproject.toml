@@ -9,8 +9,10 @@ dependencies = ["django-environ>=0.13.0", "wagtail>=7.3"]
 [dependency-groups]
 dev = [
   "bandit>=1.9.3",
+  "django-debug-toolbar>=6.2.0",
   "ipdb>=0.13.13",
   "ipython>=9.10.0",
+  "isort>=8.0.0",
   "mypy>=1.19.1",
   "ruff>=0.15.2",
 ]
