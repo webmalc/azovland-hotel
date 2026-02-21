@@ -54,6 +54,14 @@ else:
     INTERNAL_IPS = ["127.0.0.1"]
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
 
+    import sentry_sdk
+
+    sentry_sdk.init(
+        dsn=env.str("SENTRY"),
+        send_default_pii=True,
+    )
+
+
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = env("WAGTAILADMIN_BASE_URL")
