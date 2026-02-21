@@ -36,6 +36,9 @@ locals().update(env.email())
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
 SERVER_EMAIL = env.str("SERVER_EMAIL")
 
+CACHES = {"default": env.cache()}
+CACHES["default"]["TIMEOUT"] = 60 * 60 * 24 * 7
+
 if not DEBUG:  # pragma: no cover
     SECURE_BROWSER_XSS_FILTER = True
 
@@ -85,6 +88,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # apps
     "debug_toolbar",
+    "wagtailcache",
     # project
     "home",
     "search",
@@ -92,6 +96,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "wagtailcache.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -100,6 +105,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    "wagtailcache.cache.FetchFromCacheMiddleware",
 ]
 
 ROOT_URLCONF = "az.urls"

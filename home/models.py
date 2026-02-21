@@ -1,6 +1,6 @@
-
 from wagtail.models import Page
+from wagtailcache.cache import WagtailCacheMixin
 
 
-class HomePage(Page):
+class HomePage(WagtailCacheMixin, Page):
     pass
