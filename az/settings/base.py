@@ -43,13 +43,13 @@ if not DEBUG:  # pragma: no cover
     SECURE_BROWSER_XSS_FILTER = True
 
     SESSION_COOKIE_SAMESITE = "Strict"
-    SESSION_COOKIE_SECURE = "Secure"
+    SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
 
     CSRF_COOKIE_HTTPONLY = False
     CSRF_COOKIE_SAMESITE = "Strict"
 
-    CSRF_COOKIE_SECURE = "Secure"
+    CSRF_COOKIE_SECURE = True
 else:
     INTERNAL_IPS = ["127.0.0.1"]
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": lambda _: True}
