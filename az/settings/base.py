@@ -31,6 +31,7 @@ ADMINS = [(x, x) for x in env.tuple("ADMINS")]
 MANAGERS = ADMINS
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 locals().update(env.email())
 DEFAULT_FROM_EMAIL = env.str("DEFAULT_FROM_EMAIL")
