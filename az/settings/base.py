@@ -39,6 +39,8 @@ SERVER_EMAIL = env.str("SERVER_EMAIL")
 CACHES = {"default": env.cache()}
 CACHES["default"]["TIMEOUT"] = 60 * 60 * 24 * 7
 
+DATABASES = {"default": env.db()}
+
 if not DEBUG:  # pragma: no cover
     SECURE_BROWSER_XSS_FILTER = True
 
@@ -77,7 +79,7 @@ WAGTAILADMIN_BASE_URL = env("WAGTAILADMIN_BASE_URL")
 # Application definition
 
 INSTALLED_APPS = [
-    # core
+    # CORE
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -98,10 +100,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # apps
+    "django.contrib.postgres",
+    # APPS
     "debug_toolbar",
     "wagtailcache",
-    # project
+    # PROJECT
     "home",
     "search",
 ]
@@ -141,17 +144,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "az.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 
 # Password validation

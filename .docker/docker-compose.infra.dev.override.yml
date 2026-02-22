@@ -1,0 +1,7 @@
+services:
+  cache:
+    ports:
+      - "6378:6379"
+  db:
+    ports:
+      - "5431:5432"

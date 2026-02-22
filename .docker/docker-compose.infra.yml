@@ -1,0 +1,28 @@
+name: azovland-hotel-infra
+
+services:
+  db:
+    image: postgres:18.2
+    restart: unless-stopped
+    volumes:
+      - pg_data:/var/lib/postgresql
+    env_file:
+      - db.env
+    networks:
+      - azovland_network
+
+  cache:
+    image: redis:7.2
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - azovland_network
+
+volumes:
+  pg_data:
+  redis_data:
+
+networks:
+  azovland_network:
+    driver: bridge
