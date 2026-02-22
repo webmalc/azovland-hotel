@@ -12,15 +12,34 @@ services:
     env_file: web.env
     networks:
       - azovland_network
-    command: >
-      sh -c "uv run manage.py migrate --no-input &&
-            uv run manage.py collectstatic --no-input --clear &&
-            .venv/bin/gunicorn az.wsgi:application --bind 0.0.0.0:8000"
     volumes:
-      - ./static:/app/static:rw
-      - ./media:/app/media:rw
-    ports:
-      - "127.0.0.1:8000:8000"
+      - static_volume:/app/static
+      - media_volume:/app/media
+    expose:
+      - "8000"
     depends_on:
       - db
       - cache
+
+  nginx:
+    image: nginx:alpine
+    container_name: az_nginx
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    volumes:
+      - static_volume:/var/www/static:ro
+      - media_volume:/var/www/media:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - azovland_network
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
+  media_volume:
+
+networks:
+  azovland_network:
+    driver: bridge

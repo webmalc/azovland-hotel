@@ -1,23 +1,20 @@
 FROM python:3.13-slim-trixie
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  gettext libpq-dev binutils libproj-dev gdal-bin zlib1g-dev vim fish gosu \
+  gettext libpq-dev binutils libproj-dev gdal-bin zlib1g-dev vim fish \
   && rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -r appgroup && useradd -r -m -g appgroup appuser
-
 WORKDIR /app
-RUN chown appuser:appgroup /app
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-COPY --chown=appuser:appgroup uv.lock pyproject.toml ./
+COPY ./uv.lock pyproject.toml ./
 RUN uv sync --locked
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-COPY --chown=appuser:appgroup . .
-COPY .docker/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY . .
 
-ENTRYPOINT ["/entrypoint.sh"]
+RUN uv run manage.py collectstatic --no-input --clear
+
+ENTRYPOINT [".venv/bin/gunicorn", "az.wsgi:application", "--bind", "0.0.0.0:8000"]
