@@ -2,6 +2,12 @@ name: azovland_hotel
 include:
   - path: ./docker-compose.infra.yml
 
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "30m"
+    max-file: "20"
+
 services:
   web:
     build:
@@ -18,6 +24,7 @@ services:
       - static_volume:/app/static
       - media_volume:/app/media
       - gunicorn_socket:/var/run/gunicorn
+    logging: *default-logging
     depends_on:
       - db
       - cache
@@ -35,6 +42,7 @@ services:
       - gunicorn_socket:/var/run/gunicorn:ro
     networks:
       - azovland_network
+    logging: *default-logging
     depends_on:
       - web
 
