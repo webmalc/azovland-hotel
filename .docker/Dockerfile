@@ -17,4 +17,4 @@ COPY . .
 
 RUN uv run manage.py collectstatic --no-input --clear
 
-ENTRYPOINT [".venv/bin/gunicorn", "az.wsgi:application", "--bind", "0.0.0.0:8000"]
+ENTRYPOINT [".venv/bin/gunicorn", "az.wsgi:application", "--bind", "unix:/var/run/gunicorn/gunicorn.sock"]

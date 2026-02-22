@@ -15,8 +15,7 @@ services:
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
-    expose:
-      - "8000"
+      - gunicorn_socket:/var/run/gunicorn
     depends_on:
       - db
       - cache
@@ -31,6 +30,7 @@ services:
       - static_volume:/var/www/static:ro
       - media_volume:/var/www/media:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - gunicorn_socket:/var/run/gunicorn:ro
     networks:
       - azovland_network
     depends_on:
@@ -39,6 +39,7 @@ services:
 volumes:
   static_volume:
   media_volume:
+  gunicorn_socket:
 
 networks:
   azovland_network:
