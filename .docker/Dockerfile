@@ -1,12 +1,23 @@
 FROM python:3.13-slim-trixie
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  gettext libpq-dev binutils libproj-dev gdal-bin zlib1g-dev vim fish gosu \
+  && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y --no-install-recommends gettext libpq-dev binutils libproj-dev gdal-bin zlib1g-dev vim fish && rm -rf /var/lib/apt/lists/*
+RUN groupadd -r appgroup && useradd -r -m -g appgroup appuser
 
-WORKDIR /usr/src/app
-COPY uv.lock pyproject.toml ./
+WORKDIR /app
+RUN chown appuser:appgroup /app
+
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+COPY --chown=appuser:appgroup uv.lock pyproject.toml ./
 RUN uv sync --locked
+
 ENV PATH="/app/.venv/bin:$PATH"
 
-COPY . .
+COPY --chown=appuser:appgroup . .
+COPY .docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
