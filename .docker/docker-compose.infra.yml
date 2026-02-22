@@ -1,4 +1,4 @@
-name: azovland-hotel-infra
+name: azovland_hotel
 
 services:
   db:

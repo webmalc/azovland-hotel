@@ -209,3 +209,4 @@ __marimo__/
 
 # Docker
 .docker/db.env
+.docker/web.env

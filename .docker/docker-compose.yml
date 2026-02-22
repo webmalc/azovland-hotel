@@ -1,0 +1,26 @@
+name: azovland_hotel
+include:
+  - path: ./docker-compose.infra.yml
+
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: .docker/Dockerfile
+    container_name: az_web
+    restart: unless-stopped
+    env_file: web.env
+    networks:
+      - azovland_network
+    command: >
+      sh -c "uv run manage.py migrate --no-input &&
+            uv run manage.py collectstatic --no-input --clear &&
+            .venv/bin/gunicorn az.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - ./static:/usr/src/app/static:rw
+      - ./media:/usr/src/app/media:rw
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      - db
+      - cache

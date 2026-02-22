@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "django-environ>=0.13.0",
+    "gunicorn>=25.1.0",
     "psycopg2-binary>=2.9.11",
     "redis>=7.2.0",
     "sentry-sdk>=2.53.0",
