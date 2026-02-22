@@ -1,7 +1,7 @@
 FROM python:3.13-slim-trixie
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  gettext libpq-dev binutils libproj-dev gdal-bin zlib1g-dev vim fish \
+  gettext libpq-dev binutils zlib1g-dev vim fish \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -17,4 +17,4 @@ COPY . .
 
 RUN uv run manage.py collectstatic --no-input --clear
 
-ENTRYPOINT [".venv/bin/gunicorn", "az.wsgi:application", "--bind", "unix:/var/run/gunicorn/gunicorn.sock"]
+ENTRYPOINT [".venv/bin/gunicorn", "az.wsgi:application"]
