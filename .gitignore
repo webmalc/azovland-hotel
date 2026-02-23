@@ -209,5 +209,6 @@ marimo/_lsp/
 __marimo__/
 
 # Docker
-.docker/db.env
-.docker/web.env
+.docker/db/db.env
+.docker/web/web.env
+.docker/monitoring/monitoring.env
