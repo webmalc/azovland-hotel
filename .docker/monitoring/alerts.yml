@@ -6,7 +6,7 @@ groups:
           (
             (node_filesystem_size_bytes - node_filesystem_avail_bytes)
             / node_filesystem_size_bytes
-          ) * 100 > 5
+          ) * 100 > 90
         for: 2m
         labels:
           severity: critical

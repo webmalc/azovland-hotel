@@ -5,6 +5,8 @@ global:
   smtp_auth_password: "password"
   smtp_require_tls: true
 
+  telegram_api_url: "https://api.telegram.org"
+
 route:
   group_by: ["alertname", "severity"]
   group_wait: 30s
@@ -32,6 +34,15 @@ receivers:
           <b>Time:</b> {{ .StartsAt }}</p>
           <hr>
           {{ end }}
+    telegram_configs:
+      - bot_token: "bot_token"
+        chat_id: 123456789
+        message: |
+          {{ .GroupLabels.alertname }}
+          {{ range .Alerts }}
+          {{ .Annotations.summary }}
+          {{ .Annotations.description }}
+          {{ end }}
 
   - name: "critical-alerts"
     email_configs:
@@ -44,6 +55,11 @@ receivers:
           {{ range .Alerts }}
           <p>{{ .Annotations.summary }}<br>{{ .Annotations.description }}</p>
           {{ end }}
+    telegram_configs:
+      - bot_token: "bot_token"
+        chat_id: 123456789
+        send_resolved: true
+        message: "CRITICAL: {{ .GroupLabels.alertname }} - {{ range .Alerts }}{{ .Annotations.summary }}{{ end }}"
 
 inhibit_rules:
   - source_match:
