@@ -1,0 +1,53 @@
+global:
+  smtp_smarthost: "smtp.example.com:587"
+  smtp_from: "user@example.com"
+  smtp_auth_username: "user@example.com"
+  smtp_auth_password: "password"
+  smtp_require_tls: true
+
+route:
+  group_by: ["alertname", "severity"]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+  receiver: "default"
+  routes:
+    - match:
+        severity: critical
+      receiver: "critical-alerts"
+      continue: true
+
+receivers:
+  - name: "default"
+    email_configs:
+      - to: "user@example.com"
+        headers:
+          Subject: "Prometheus Alert: {{ .GroupLabels.alertname }}"
+        html: |
+          <h3>{{ .GroupLabels.alertname }}</h3>
+          {{ range .Alerts }}
+          <p><b>Alert:</b> {{ .Annotations.summary }}<br>
+          <b>Description:</b> {{ .Annotations.description }}<br>
+          <b>Severity:</b> {{ .Labels.severity }}<br>
+          <b>Time:</b> {{ .StartsAt }}</p>
+          <hr>
+          {{ end }}
+
+  - name: "critical-alerts"
+    email_configs:
+      - to: "oncall@example.com"
+        send_resolved: true
+        headers:
+          Subject: "CRITICAL: {{ .GroupLabels.alertname }}"
+        html: |
+          <h3>CRITICAL: {{ .GroupLabels.alertname }}</h3>
+          {{ range .Alerts }}
+          <p>{{ .Annotations.summary }}<br>{{ .Annotations.description }}</p>
+          {{ end }}
+
+inhibit_rules:
+  - source_match:
+      severity: "critical"
+    target_match:
+      severity: "warning"
+    equal: ["alertname", "instance"]

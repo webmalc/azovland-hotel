@@ -213,3 +213,4 @@ __marimo__/
 .docker/db/db.env
 .docker/web/web.env
 .docker/monitoring/monitoring.env
+.docker/monitoring/alertmanager.yml

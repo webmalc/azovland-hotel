@@ -1,0 +1,16 @@
+groups:
+  - name: disk-alerts
+    rules:
+      - alert: HostDiskSpaceCritical
+        expr: |
+          (
+            (node_filesystem_size_bytes - node_filesystem_avail_bytes)
+            / node_filesystem_size_bytes
+          ) * 100 > 5
+        for: 2m
+        labels:
+          severity: critical
+          team: infrastructure
+        annotations:
+          summary: "Critical disk space on {{ $labels.instance }}"
+          description: 'Disk {{ $labels.mountpoint }} is {{ printf "%.1f" $value }}% full on {{ $labels.instance }}. Immediate action required!'
