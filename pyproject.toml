@@ -13,6 +13,7 @@ dependencies = [
   "wagtail>=7.3",
   "wagtail-cache>=3.0.0",
   "wagtail-html-editor>=1.0.0",
+  "wagtailmenus>=4.0.6",
 ]
 
 [dependency-groups]

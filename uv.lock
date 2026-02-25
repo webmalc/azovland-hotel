@@ -42,6 +42,7 @@ dependencies = [
     { name = "wagtail" },
     { name = "wagtail-cache" },
     { name = "wagtail-html-editor" },
+    { name = "wagtailmenus" },
 ]
 
 [package.dev-dependencies]
@@ -65,6 +66,7 @@ requires-dist = [
     { name = "wagtail", specifier = ">=7.3" },
     { name = "wagtail-cache", specifier = ">=3.0.0" },
     { name = "wagtail-html-editor", specifier = ">=1.0.0" },
+    { name = "wagtailmenus", specifier = ">=4.0.6" },
 ]
 
 [package.metadata.requires-dev]
@@ -195,6 +197,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/26/3e/a1c4207c5dea4697b7a3387e26584919ba987d8f9320f59dc0b5c557a4eb/django-6.0.2.tar.gz", hash = "sha256:3046a53b0e40d4b676c3b774c73411d7184ae2745fe8ce5e45c0f33d3ddb71a7", size = 10886874 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/96/ba/a6e2992bc5b8c688249c00ea48cb1b7a9bc09839328c81dc603671460928/django-6.0.2-py3-none-any.whl", hash = "sha256:610dd3b13d15ec3f1e1d257caedd751db8033c5ad8ea0e2d1219a8acf446ecc6", size = 8339381 },
+]
+
+[[package]]
+name = "django-cogwheels"
+version = "0.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b6/a5/d3bf15adaaf3de18f5f588b29f0e0feb251e5bf052271d18af51ec117f86/django-cogwheels-0.3.tar.gz", hash = "sha256:848a4d9f2c96c582a4a4f2e7c276dfd95ab3905748cae13bb7c4b365a6717e94", size = 31198 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9a/3b/2db92c666d39da78cc872da012582dab7bf4f3ff25e8246bd6ebc547e301/django_cogwheels-0.3-py3-none-any.whl", hash = "sha256:197bd05e7114403d7301214b3f8a371c4fb6039cf21c811f099438b167b5ed21", size = 35154 },
 ]
 
 [[package]]
@@ -1035,6 +1046,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7c/30/0ee704b2059ac8b219c731d3a8f7983851beeed6d04fea88776e08dda3e0/wagtail_html_editor-1.0.0.tar.gz", hash = "sha256:690818e50ea5753c0be0185b997f0f27fc01015cd8a4bde4ccf2ff5734b99307", size = 1660862 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/cd/ba/bb8b8f21bae50741b487d3041098ebcd5185bf99ab1a1954ae2dba92ea1a/wagtail_html_editor-1.0.0-py3-none-any.whl", hash = "sha256:b4cce1cf524e0095f7686efca051e14e8cb7386e20ad9139ea2798f465f08020", size = 1678625 },
+]
+
+[[package]]
+name = "wagtailmenus"
+version = "4.0.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django-cogwheels" },
+    { name = "wagtail" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9d/91/b27e7b9fde2380bbc48188ff10d7625482160d0e19056fe253c63db3ddc2/wagtailmenus-4.0.6.tar.gz", hash = "sha256:ae95035ae629d0dee36a5b94a4633129b81de5b4e8c796ff65a9444408c904e4", size = 117133 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/19/13/9aaf2a49ba5da60b0533b384bfab02bb1617114fba6d4a9078e952212f11/wagtailmenus-4.0.6-py3-none-any.whl", hash = "sha256:bc0423a56742abde2ed32c70eb07ba2efb64faafa7b693ff4ccc657d3a8b4261", size = 200597 },
 ]
 
 [[package]]
