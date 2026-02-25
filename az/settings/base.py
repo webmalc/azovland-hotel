@@ -91,6 +91,7 @@ INSTALLED_APPS = [
     "wagtail.images",
     "wagtail.search",
     "wagtail.admin",
+    "wagtail.contrib.settings",
     "wagtail",
     "modelcluster",
     "taggit",
@@ -105,6 +106,7 @@ INSTALLED_APPS = [
     # APPS
     "debug_toolbar",
     "wagtailcache",
+    "wagtail_html_editor",
     # PROJECT
     "home",
     "search",
@@ -139,6 +141,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "wagtail.contrib.settings.context_processors.settings",
             ],
         },
     },

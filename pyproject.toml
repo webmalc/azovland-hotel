@@ -5,13 +5,14 @@ description = "azovland-hotel website"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "django-environ>=0.13.0",
-    "gunicorn>=25.1.0",
-    "psycopg2-binary>=2.9.11",
-    "redis>=7.2.0",
-    "sentry-sdk>=2.53.0",
-    "wagtail>=7.3",
-    "wagtail-cache>=3.0.0",
+  "django-environ>=0.13.0",
+  "gunicorn>=25.1.0",
+  "psycopg2-binary>=2.9.11",
+  "redis>=7.2.0",
+  "sentry-sdk>=2.53.0",
+  "wagtail>=7.3",
+  "wagtail-cache>=3.0.0",
+  "wagtail-html-editor>=1.0.0",
 ]
 
 [dependency-groups]
@@ -117,6 +118,8 @@ module = [
   "django_extensions.*",
   "redis.*",
   "wagtail.*",
+  "wagtailcache.*",
+  "wagtail_html_editor.*",
   "kombu.*",
   "pytest.*",
   "_pytest.*",

@@ -41,6 +41,7 @@ dependencies = [
     { name = "sentry-sdk" },
     { name = "wagtail" },
     { name = "wagtail-cache" },
+    { name = "wagtail-html-editor" },
 ]
 
 [package.dev-dependencies]
@@ -63,6 +64,7 @@ requires-dist = [
     { name = "sentry-sdk", specifier = ">=2.53.0" },
     { name = "wagtail", specifier = ">=7.3" },
     { name = "wagtail-cache", specifier = ">=3.0.0" },
+    { name = "wagtail-html-editor", specifier = ">=1.0.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -1020,6 +1022,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/03/de/30e9441b66e9f679198ff5046b6bb6fa3dffe5e1a8268ac5b0847356ab89/wagtail_cache-3.0.0.tar.gz", hash = "sha256:a12b9f7dbd41b560b7fa77be08a6c7ab292536e37296dc910275b99c198ddd1e", size = 12318 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/19/92/1c83f4c93e015034666ac192a7e7716236c9595331a8db45fa7b43d159ea/wagtail_cache-3.0.0-py3-none-any.whl", hash = "sha256:2bbb8d1bc5c4c9d7755113c0c8b91b3ec8a0c90bd560ef62aab99698961114fa", size = 14981 },
+]
+
+[[package]]
+name = "wagtail-html-editor"
+version = "1.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+    { name = "wagtail" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7c/30/0ee704b2059ac8b219c731d3a8f7983851beeed6d04fea88776e08dda3e0/wagtail_html_editor-1.0.0.tar.gz", hash = "sha256:690818e50ea5753c0be0185b997f0f27fc01015cd8a4bde4ccf2ff5734b99307", size = 1660862 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cd/ba/bb8b8f21bae50741b487d3041098ebcd5185bf99ab1a1954ae2dba92ea1a/wagtail_html_editor-1.0.0-py3-none-any.whl", hash = "sha256:b4cce1cf524e0095f7686efca051e14e8cb7386e20ad9139ea2798f465f08020", size = 1678625 },
 ]
 
 [[package]]
