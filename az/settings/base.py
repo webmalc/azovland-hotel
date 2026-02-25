@@ -246,6 +246,7 @@ WAGTAILDOCS_EXTENSIONS = [
     "txt",
     "xlsx",
     "zip",
+    "mp4",
 ]
 
 LOGGING = {

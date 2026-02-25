@@ -2,6 +2,7 @@ from django.utils.functional import cached_property
 from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
+    IntegerBlock,
     RichTextBlock,
     StreamBlock,
     StructBlock,
@@ -13,6 +14,19 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail_html_editor.blocks import EnhancedHTMLBlock
 
 
+class ReviewBlock(StructBlock):
+    review = TextBlock(
+        label="Текст",
+    )
+    author = CharBlock(
+        label="Автор",
+        max_length=255,
+    )
+
+    class Meta:
+        icon = "user"
+
+
 class IconTextItem(StructBlock):
     text = CharBlock(
         label="Текст",
@@ -22,6 +36,13 @@ class IconTextItem(StructBlock):
         max_length=50,
         label="Иконка",
         help_text="Например: fa-bed, fa-wifi. https://fontawesome.com/search?q=cat&ic=free-collection",
+        required=False,
+    )
+    counter = IntegerBlock(
+        max_length=255,
+        label="Счетчик",
+        required=False,
+        min_value=1,
     )
 
     class Meta:

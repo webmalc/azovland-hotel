@@ -7,19 +7,191 @@ from wagtail.admin.panels import (
     TabbedInterface,
 )
 from wagtail.contrib.settings.models import BaseGenericSetting, register_setting
+from wagtail.documents.models import Document
 from wagtail.fields import StreamField
 from wagtail.models import Collection, Page
 from wagtailcache.cache import WagtailCacheMixin
 
-from .blocks import BaseStreamBlock, IconTextItem
+from .blocks import BaseStreamBlock, IconTextItem, ReviewBlock
 
 
 class HomePage(WagtailCacheMixin, Page):
-    pass
+    header_1 = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Заголовок 1",
+    )
+    text_1 = models.TextField(
+        blank=True,
+        verbose_name="Текст 1",
+    )
+    header_2 = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="Заголовок 2",
+    )
+    text_2 = models.TextField(
+        blank=True,
+        verbose_name="Текст 2",
+    )
+
+    # videos
+    bg_video_size_l = models.ForeignKey(
+        Document,
+        null=True,
+        blank=True,
+        on_delete=models.RESTRICT,
+        related_name="+",
+        verbose_name="Фоновое видео (большое)",
+    )
+    bg_video_size_m = models.ForeignKey(
+        Document,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Фоновое видео (среднее)",
+    )
+    bg_video_size_s = models.ForeignKey(
+        Document,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Фоновое видео (малое)",
+    )
+
+    # features
+    stats = StreamField(
+        [("feature", IconTextItem(label="Статистика"))],
+        blank=True,
+        verbose_name="Статистика отеля",
+        collapsed=True,
+    )
+    activities = StreamField(
+        [("feature", IconTextItem(label="Активность"))],
+        blank=True,
+        verbose_name="Активности отеля",
+        collapsed=True,
+    )
+    facilities = StreamField(
+        [("feature", IconTextItem(label="Услуга"))],
+        blank=True,
+        verbose_name="Услуги/инфраструктура отеля",
+        collapsed=True,
+    )
+
+    # pages
+    featured_section_1_title = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name="Заголовок раздела 1",
+    )
+    featured_section_1 = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Раздел 1",
+    )
+    featured_section_2_title = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name="Заголовок раздела 2",
+    )
+    featured_section_2 = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Раздел 2",
+    )
+    featured_section_3_title = models.CharField(
+        blank=True,
+        max_length=255,
+        verbose_name="Заголовок раздела 3",
+    )
+    featured_section_3 = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Раздел 3",
+    )
+
+    # other
+    reviews = StreamField(
+        [("feature", ReviewBlock(label="Отзыв"))],
+        blank=True,
+        verbose_name="Отзывы клиентов",
+        collapsed=True,
+    )
+    featured_photos_1 = models.ForeignKey(
+        Collection,
+        limit_choices_to=~models.Q(name__in=["Root"]),
+        null=True,
+        blank=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        verbose_name="Избранные изображения 1",
+    )
+    featured_photos_2 = models.ForeignKey(
+        Collection,
+        limit_choices_to=~models.Q(name__in=["Root"]),
+        null=True,
+        blank=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        verbose_name="Избранные изображения 2",
+    )
+
+    # panels
+    content_panels = Page.content_panels + [
+        FieldPanel("bg_video_size_l"),
+        FieldPanel("bg_video_size_m"),
+        FieldPanel("bg_video_size_s"),
+    ]
+    features_panels = [
+        FieldPanel("stats"),
+        FieldPanel("activities"),
+        FieldPanel("facilities"),
+    ]
+    other_panels = [
+        FieldPanel("reviews"),
+        FieldPanel("featured_photos_1"),
+        FieldPanel("featured_photos_2"),
+    ]
+    sections_panels = [
+        FieldPanel("featured_section_1_title"),
+        FieldPanel("featured_section_1"),
+        FieldPanel("featured_section_2_title"),
+        FieldPanel("featured_section_2"),
+        FieldPanel("featured_section_3_title"),
+        FieldPanel("featured_section_3"),
+    ]
+    text_panels = [
+        FieldPanel("header_1"),
+        FieldPanel("text_1"),
+        FieldPanel("header_2"),
+        FieldPanel("text_2"),
+    ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading="Контент"),
+            ObjectList(features_panels, heading="Особенности отеля"),
+            ObjectList(sections_panels, heading="Разделы"),
+            ObjectList(text_panels, heading="Текст"),
+            ObjectList(other_panels, heading="Другое"),
+            ObjectList(Page.promote_panels, heading="Продвижение"),
+            ObjectList(Page.settings_panels, heading="Настройки"),
+        ]
+    )
 
 
-# TODO: home page, header
-#
 @register_setting(icon="comment")
 class GenericSettings(BaseGenericSetting):
     address_short = models.CharField(
@@ -144,7 +316,7 @@ class BaseObject(WagtailCacheMixin, Page):
         verbose_name="Коллекция видео",
     )
     features = StreamField(
-        [("feature", IconTextItem())],
+        [("feature", IconTextItem(label="Особенность"))],
         blank=True,
         verbose_name="Особенности объекта",
         collapsed=True,
