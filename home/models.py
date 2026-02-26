@@ -14,6 +14,12 @@ from wagtailcache.cache import WagtailCacheMixin
 
 from .blocks import BaseStreamBlock, IconTextItem, ReviewBlock
 
+# TODO:   azovland: 9,10 template, header + video,menu, stats (happy customers, etc),
+# rooms: tile, descrit, size 14-20m2, adults + childer, amenities, beds, calc -> az, photo, photo title
+# objects: title, descrip, photo, video, amenities, photo title (9 template blog)
+# contats - about: just page, yandex.map
+#
+
 
 class HomePage(WagtailCacheMixin, Page):
     header_1 = models.CharField(
