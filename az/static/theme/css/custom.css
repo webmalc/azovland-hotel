@@ -1,0 +1,11 @@
+.text__logo {
+  font-size: 21px;
+  text-transform: uppercase;
+} 
+.text__logo span {
+  display: block;
+  font-size: 12px;
+  text-transform: lowercase;
+  margin: 4px 0px 0px 0px;
+}
+}

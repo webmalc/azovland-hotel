@@ -8,11 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="icon" type="image/x-icon" href="{% static 'theme/img/favicon.ico' %}"/>
-  <link rel="stylesheet" href="{% static 'theme/fonts/fonts.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'theme/fonts/fonts.css' %}"> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
-    <link rel="stylesheet" href="{% static 'theme/css/vendors.css' %}">
-    <link rel="stylesheet" href="{% static 'theme/css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'theme/css/vendors.css' %}">
+  <link rel="stylesheet" href="{% static 'theme/css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'theme/css/custom.css' %}">
 
   <title>Swiss Resort</title>
 </head>
@@ -1817,6 +1822,7 @@
     <footer class="footer -type-3 -borderGap text-white overflow-hidden rounded-16">
       <div class="footer__bg bg-accent-1"></div>
 
+      {% with settings=settings.home.GenericSettings %}
       <div class="footer__main">
         <div class="container">
           <div class="row justify-center text-center">
@@ -1827,13 +1833,14 @@
                     <div class="flex-center size-90 border-white-10 rounded-full mx-auto">
                       <i class="icon-email text-30"></i>
                     </div>
-                    <a href="home-9.html#" class="d-flex justify-center text-17 fw-500 mt-20">info@swiss-resort.com</a>
+                    <a href="mailto:{{ settings.email }}" class="d-flex justify-center text-17 fw-500 mt-20">{{ settings.email }}</a>
                   </div>
                 </div>
 
                 <div class="col-lg-auto lg:order-1">
                   <div class="footer__logo">
-                    <img src="{% static 'theme/img/general/logo-white.svg' %}" alt="logo">
+                    <div class="text__logo">«Азовский»<span>Курортная сеть</span></div>
+                    <!-- <img src="{% static 'theme/img/general/logo-white.svg' %}" alt="logo"> -->
                   </div>
 
                   <div class="d-flex justify-center mt-40 mb-40">
@@ -1841,8 +1848,7 @@
                   </div>
 
                   <div class="text-white">
-                    PO Box 16122 Collins Street West<br class="lg:d-none">
-                    Victoria 8007 Australia
+                    {{settings.address|linebreaksbr}}
                   </div>
                 </div>
 
@@ -1870,6 +1876,7 @@
         </div>
       </div>
     </footer>
+    {% endwith %}
 
 
   </main>

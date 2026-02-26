@@ -206,7 +206,7 @@ class GenericSettings(BaseGenericSetting):
         blank=False,
         null=False,
     )
-    address = models.CharField(
+    address = models.TextField(
         max_length=255,
         verbose_name="Адрес",
         blank=False,
