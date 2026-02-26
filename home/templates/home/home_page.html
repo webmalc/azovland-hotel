@@ -16,8 +16,8 @@
                 <div class="hero__slide">
                     <div class="hero__bg" data-anim-child="img-right cover-white delay-2">
                         <!-- <img src="{% static 'theme/img/hero/9/1.png' %}" alt="image" class="img-ratio" /> -->
-                        <video onloadedmetadata="this.muted=true" autoplay="" loop="" preload="auto" class="video">
-                          <source  src="{{ page.bg_video_size_l.url }}" type="video/mp4">
+                        <video loading="lazy" poster="{% static 'theme/img/hero/9/1.png' %}" onloadedmetadata="this.muted=true" autoplay="" loop="" muted preload="auto" class="video" playsinline >
+                          <source src="{{ page.bg_video_size_l.url }}" type="video/mp4">
                         </video>
                     </div>
 

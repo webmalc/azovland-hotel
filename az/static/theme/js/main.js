@@ -2545,7 +2545,6 @@
     })
 
     swiper.on('slideChange', function () {
-      console.log(swiper.realIndex)
       images.style.transform = `translateX(${swiper.realIndex * -100}%)`
     })
   }
