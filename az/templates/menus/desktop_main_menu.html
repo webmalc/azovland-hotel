@@ -1,0 +1,22 @@
+<div class="d-none lg:d-flex text-white items-center js-menuFullScreen-toggle"> <i class="icon-menu text-9"></i>
+  <div class="text-15 uppercase ml-30 sm:d-none">Меню</div>
+</div>
+<div class="text-white lg:d-none">
+  <div class="desktopNav">
+    {% for item in menu_items %}
+    <div class="desktopNav__item">
+
+      <a href="{{ item.href }}">{{ item.text }}{% if item.has_children_in_menu %} <i class="icon-chevron-down"></i>{% endif %}</a>
+      {% if item.has_children_in_menu %} 
+      <div class="desktopNavSubnav">
+        <div class="desktopNavSubnav__content">
+          {% for sub_item in item.sub_menu.items %}
+          <div class="desktopNavSubnav__item"> <a href="{{ sub_item.href }}">{{ sub_item.text }}</a></div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+  </div>
+</div>

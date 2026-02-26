@@ -1,0 +1,21 @@
+<div class="menuFullScreen-links js-menuFullScreen-links">
+
+  {% for item in menu_items %}
+  <div class="menuFullScreen-links__item js-menuFullScreen-has-children">
+    <a href="{% if item.has_children_in_menu %}#{% else %}{{ item.href }}{% endif %}">
+    {{ item.text }}
+    {% if item.has_children_in_menu %}
+        <i class="icon-arrow-right"></i>
+        <i class="icon-chevron-right"></i>
+    {% endif %}
+    </a>
+    {% if item.has_children_in_menu %}
+    <div class="menuFullScreen-links-subnav js-menuFullScreen-subnav">
+      {% for sub_item in item.sub_menu.items %}
+        <div class="menuFullScreen-links-subnav__item" onclick="location.href='{{ sub_item.href }}'"> <a href="{{ sub_item.href }}">{{ sub_item.text }}</a> </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>

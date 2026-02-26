@@ -153,6 +153,15 @@ class HomePage(WagtailCacheMixin, Page):
         on_delete=models.SET_NULL,
         verbose_name="Избранные изображения 2",
     )
+    featured_photos_3 = models.ForeignKey(
+        Collection,
+        limit_choices_to=~models.Q(name__in=["Root"]),
+        null=True,
+        blank=True,
+        related_name="+",
+        on_delete=models.SET_NULL,
+        verbose_name="Избранные изображения 3",
+    )
 
     # panels
     content_panels = Page.content_panels + [
@@ -169,6 +178,7 @@ class HomePage(WagtailCacheMixin, Page):
         FieldPanel("reviews"),
         FieldPanel("featured_photos_1"),
         FieldPanel("featured_photos_2"),
+        FieldPanel("featured_photos_3"),
     ]
     sections_panels = [
         FieldPanel("featured_section_1_title"),
@@ -200,6 +210,14 @@ class HomePage(WagtailCacheMixin, Page):
 
 @register_setting(icon="comment")
 class GenericSettings(BaseGenericSetting):
+    book_link = models.URLField(
+        verbose_name="Ссылка на бронирование",
+        blank=True,
+    )
+    book_link_text = models.CharField(
+        verbose_name="Текст ссылки на бронирование",
+        blank=True,
+    )
     address_short = models.CharField(
         max_length=100,
         verbose_name="Адрес (короткий)",
@@ -231,6 +249,8 @@ class GenericSettings(BaseGenericSetting):
     panels = [
         MultiFieldPanel(
             [
+                FieldPanel("book_link"),
+                FieldPanel("book_link_text"),
                 FieldPanel("address"),
                 FieldPanel("address_short"),
                 FieldPanel("phone"),

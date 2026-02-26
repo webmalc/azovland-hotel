@@ -1,11 +1,19 @@
 .text__logo {
-  font-size: 21px;
+  font-size: 26px;
   text-transform: uppercase;
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+} 
+.text__logo.black {
+  color: rgb(18, 34, 35);
 } 
 .text__logo span {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   text-transform: lowercase;
-  margin: 4px 0px 0px 0px;
-}
+  margin: 2px 0px 0px 0px;
+  font-family: var(--font-primary);
+  font-weight: normal;
 }

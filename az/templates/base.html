@@ -1,46 +1,167 @@
 {% load static wagtailcore_tags wagtailuserbar %}
-
+{% load menu_tags %}
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>
-            {% block title %}
-            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
-            {% endblock %}
-            {% block title_suffix %}
-            {% wagtail_site as current_site %}
-            {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
-            {% endblock %}
-        </title>
-        {% if page.search_description %}
-        <meta name="description" content="{{ page.search_description }}" />
-        {% endif %}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html lang="ru" data-x="html" data-x-toggle="html-overflow-hidden">
+{% with settings=settings.home.GenericSettings %}
 
-        {# Force all links in the live preview panel to be opened in a new tab #}
-        {% if request.in_preview_panel %}
-        <base target="_blank">
-        {% endif %}
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> {% block title %} {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %} {% endblock %} {% block title_suffix %} {% wagtail_site as current_site %} {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %} {% endblock %} </title>
+  {% if page.search_description %}
+	<meta name="description" content="{{ page.search_description }}" />
+  {% endif %}
+  {# Force all links in the live preview panel to be opened in a new tab #}
+  {% if request.in_preview_panel %}
+	<base target="_blank"> {% endif %}
+	<link rel="icon" type="image/x-icon" href="{% static 'theme/img/favicon.ico' %}" />
 
-        {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/az.css' %}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-        {% block extra_css %}
-        {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
-    </head>
+	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/vendors.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/custom.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/az.css' %}">
+  {% block extra_css %}{% endblock %} 
+</head>
 
-    <body class="{% block body_class %}{% endblock %}">
-        {% wagtailuserbar %}
+<body class="{% block body_class %}{% endblock %}"> {% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
+  {% block header %}
+	<div class="menuFullScreen js-menuFullScreen">
+		<div class="menuFullScreen__topMobile js-menuFullScreen-topMobile">
+			<div class="d-flex items-center text-white js-menuFullScreen-toggle"> <i class="icon-menu text-9"></i>
+				<div class="text-15 uppercase ml-30 sm:d-none">Меню</div>
+			</div>
+			<div class="">
+        <!-- <img src="{% static 'theme/img/general/logo-white.svg' %}" alt="logo"> -->
+        <div class="text__logo">«Азовский»<span>Курортная сеть</span></div>
+      </div>
+			<!-- <button class="button text-white mr-30 lg:mr-0"> EN <i class="icon-chevron-down ml-15"></i> </button> -->
+		</div>
+		<div class="menuFullScreen__mobile__bg js-menuFullScreen-mobile-bg"></div>
+		<div class="menuFullScreen__left">
+			<div class="menuFullScreen__bg js-menuFullScreen-bg"> <img src="{% static 'theme/img/menu/bg.png' %}" alt="image"> </div>
+			<button class="menuFullScreen__close js-menuFullScreen-toggle js-menuFullScreen-close-btn"> <span class="icon">
+                <span></span> <span></span> </span> ЗАКРЫТЬ </button>
+      {% main_menu max_levels=2 template="menus/mobile_main_menu.html" add_sub_menus_inline=True %}
+		</div>
+		<div class="menuFullScreen__right js-menuFullScreen-right">
+			<div class="text-center">
+				<div class="mb-100">
+          <!-- <img src="{% static 'theme/img/general/logo-black.svg' %}" alt="image"> -->
+          <div class="text__logo black">«Азовский»<span>Курортная сеть</span></div>
+        </div>
+				<div class="mt-40">
+					<div class="text-30 text-sec fw-500"> Адрес </div>
+					<div class="mt-10"> {{ settings.address|linebreaksbr }}</div>
+				</div>
+				<div class="mt-40">
+					<div class="text-30 text-sec fw-500"> Контакты </div>
+					<div class="mt-10">
+            <div> <a href="tel:{{ settings.phone|cut:' ' }}">{{ settings.phone}}</a> </div>
+            <div> <a href="mailto:{{ settings.email }}">{{ settings.email }}</a> </div>
+					</div>
+				</div>
+				<div class="mt-40">
+				</div>
+			</div>
+		</div>
+		<div class="menuFullScreen__bottomMobile js-menuFullScreen-buttomMobile">
+			<button class="button rounded-200 w-1/1 py-20 -light-1 bg-accent-2" onclick="location.href='{{ settings.book_link }}'"> {{ settings.book_link_text }}</button>
+      <a href="tel:{{ settings.phone|cut:' ' }}" class="d-flex items-center mt-40"> <i class="icon-phone mr-10"></i> <span>{{ settings.phone }}</span> </a>
+			<a href="home-9.html#" class="d-flex mt-20"> <i class="icon-map mr-10"></i> <span>
+              {{ settings.address|linebreaksbr }}
+              </span> </a>
+              <a href="mailto:{{ settings.email }}" class="d-flex items-center mt-20"> <i class="icon-mail mr-10"></i> <span>{{ settings.email }}</span> </a>
+		</div>
+	</div>
 
-        {# Global javascript #}
-        <script type="text/javascript" src="{% static 'js/az.js' %}"></script>
+	<!-- cursor start -->
+	<div class="cursor js-cursor">
+		<div class="cursor__wrapper">
+			<div class="cursor__follower js-follower"></div>
+			<div class="cursor__label js-label"></div>
+			<div class="cursor__icon js-icon"></div>
+		</div>
+	</div>
+	<!-- cursor end -->
+	<main>
+		<header class="header -mx-60 js-header" data-add-bg="bg-dark-2" data-x="header" data-x-toggle="-is-menu-opened" data-anim="fade delay-3">
+			<div class="header__container py-50">
+				<div class="headerMobile__left">
+          {% main_menu max_levels=2 template="menus/desktop_main_menu.html" add_sub_menus_inline=True %}
+				</div>
+				<div class="header__center">
+					<div class="header__logo">
+            <div class="text__logo">«Азовский»<span>Курортная сеть</span></div>
+            <!-- <img src="{% static 'theme/img/general/logo-header-9.svg' %}" alt="logo"> -->
+          </div>
+				</div>
+				<div class="header__right d-flex items-center h-full">
+          <button class="button text-white mr-60 lg:d-none"> <i class="icon-phone mr-15"></i> {{ settings.phone }}</button>
+					<!-- <button class="button text-white mr-60 lg:mr-0"> EN <i class="icon-chevron-down ml-15"></i> </button> -->
+          <button class="button -md -blur-1 text-white rounded-200 mr-30 lg:d-none" onclick="location.href='{{ settings.book_link }}'"> {{ settings.book_link_text }} </button>
+				</div>
+			</div>
+		</header> 
+    {% endblock %}
 
-        {% block extra_js %}
-        {# Override this in templates to add extra javascript #}
-        {% endblock %}
-    </body>
+    {% block content %}{% endblock %} 
+
+    {% block footer %}
+		<footer class="footer -type-3 -borderGap text-white overflow-hidden rounded-16">
+			<div class="footer__bg bg-accent-1"></div>
+
+
+			<div class="footer__main">
+				<div class="container">
+					<div class="row justify-center text-center">
+						<div class="col-xl-8 col-lg-10">
+							<div class="row y-gap-40 justify-between lg:justify-center items-center">
+								<div class="col-auto lg:order-2">
+									<div class="text-center text-white">
+										<div class="flex-center size-90 border-white-10 rounded-full mx-auto"> <i class="icon-email text-30"></i> </div> <a href="mailto:{{ settings.email }}" class="d-flex justify-center text-17 fw-500 mt-20">{{ settings.email }}</a> </div>
+								</div>
+								<div class="col-lg-auto lg:order-1">
+									<div class="footer__logo">
+										<div class="text__logo">«Азовский»<span>Курортная сеть</span></div>
+										<!-- <img src="{% static 'theme/img/general/logo-white.svg' %}" alt="logo"> --></div>
+									<div class="d-flex justify-center mt-40 mb-40">
+										<div class="line -horizontal -w-140 bg-white-10"></div>
+									</div>
+									<div class="text-white"> {{settings.address|linebreaksbr}} </div>
+								</div>
+								<div class="col-auto lg:order-3">
+									<div class="text-center text-white">
+										<div class="flex-center size-90 border-white-10 rounded-full mx-auto"> <i class="icon-phone text-30"></i> </div> <a href="tel:{{ settings.phone|cut:' ' }}" class="d-flex justify-center text-17 fw-500 mt-20">{{ settings.phone }}</a> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer__bottom bg-dark-3">
+				<div class="container">
+					<div class="row justify-center">
+						<div class="col-auto">
+							<div class="text-15 text-center text-white-60">© {% now "Y" %} Азовский. Все права защищены.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+    {% endblock %}
+
+		<script type="text/javascript" src="{% static 'theme/js/vendors.js' %}"></script>
+		<script type="text/javascript" src="{% static 'theme/js/main.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/az.js' %}"></script> 
+
+    {% block extra_js %}{% endblock %} </main>
+</body>
+
+{% endwith %} 
 </html>
