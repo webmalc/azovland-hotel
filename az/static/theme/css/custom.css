@@ -35,3 +35,9 @@
   padding-top: 30px !important;
   padding-bottom: 30px !important;
 }
+.gallery-grid {
+  padding-bottom: 100px;
+}
+.ratio-41\:25::before {
+  padding-bottom: 60.97561%;
+}

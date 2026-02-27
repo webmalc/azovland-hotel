@@ -14,12 +14,6 @@ from wagtailcache.cache import WagtailCacheMixin
 
 from .blocks import BaseStreamBlock, IconTextItem, ReviewBlock
 
-# TODO:   azovland: 9,10 template, header + video,menu, stats (happy customers, etc),
-# rooms: tile, descrit, size 14-20m2, adults + childer, amenities, beds, calc -> az, photo, photo title
-# objects: title, descrip, photo, video, amenities, photo title (9 template blog)
-# contats - about: just page, yandex.map
-#
-
 
 class DarkMenuMixin:
     dark_menu = True
@@ -304,7 +298,7 @@ class StandardPage(Page, DarkMenuMixin):
         verbose_name = "Страница"
 
 
-class BaseObject(WagtailCacheMixin, Page):
+class BaseObject(WagtailCacheMixin, Page, DarkMenuMixin):
     """Base abstract object."""
 
     introduction = models.TextField(
@@ -334,19 +328,10 @@ class BaseObject(WagtailCacheMixin, Page):
         verbose_name="Коллекция изображений",
     )
     video_collection = StreamField(
-        [
-            (
-                "videos",
-                blocks.ListBlock(
-                    blocks.RawHTMLBlock(),
-                    label="Код видео",
-                    collapsed=True,
-                ),
-            ),
-        ],
+        [("videos", blocks.RawHTMLBlock(label="Код видео"))],
         blank=True,
-        use_json_field=True,
         verbose_name="Коллекция видео",
+        collapsed=True,
     )
     features = StreamField(
         [("feature", IconTextItem(label="Особенность"))],
@@ -359,7 +344,7 @@ class BaseObject(WagtailCacheMixin, Page):
         abstract = True
 
 
-class RoomListPage(WagtailCacheMixin, Page):
+class RoomListPage(WagtailCacheMixin, Page, DarkMenuMixin):
     """List page for rooms."""
 
     class Meta:
@@ -418,7 +403,7 @@ class RoomPage(BaseObject):
         verbose_name = "Номер"
 
 
-class GalleryListPage(WagtailCacheMixin, Page):
+class GalleryListPage(WagtailCacheMixin, Page, DarkMenuMixin):
     """List page for gallery."""
 
     class Meta:

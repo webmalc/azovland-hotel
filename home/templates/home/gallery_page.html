@@ -1,0 +1,88 @@
+
+{% extends "base.html" %} 
+{% load wagtailimages_tags wagtailcore_tags static custom_tags humanize %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/css/lightgallery.min.css" integrity="sha512-QMCloGTsG2vNSnHcsxYTapI6pFQNnUP6yNizuLL5Wh3ha6AraI6HrJ3ABBaw6SIUHqlSTPQDs/SydiR98oTeaQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/css/lg-thumbnail.min.css" integrity="sha512-rKuOh3xlF/027KUPuMok0ESsZ2zWPRzkniD3n5zZKCAtbiVkYw66DR4KtVAGf8dLPLr5DdyQs05BlSmEyXctkQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+
+{% block content %}
+
+    <section class="layout-pt-lg content">
+          <div data-anim-wrap="" class="container animated">
+            <div class="row">
+              <div class="col-xl-10 col-lg-11">
+                <h2 class="row text-64 md:text-40 capitalize" style="">{{ page.title }}</h2>
+
+                <div class="row y-gap-30 pt-60 md:pt-40">
+
+                  {{ page.introduction|linebreaksbr }}
+
+                </div>
+              </div>
+            </div>
+          </div>
+    </section>
+
+    <section class="gallery-grid">
+      <div class="container">
+        <div class="row y-gap-85 x-gap-85">
+
+          {% for block in page.video_collection %}
+          <div class="col-lg-4 col-md-6">
+              <div class="baseCard__image ratio ratio-41:25">
+                <div class="img-ratio">
+                {{ block.value}}
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+
+          {% collection_images page.collection as photos %}
+          {% for photo in photos %}
+          <div class="col-lg-4 col-md-6">
+            {% image photo width-1920 as full_img %}
+            <a href="{{ full_img.url }}" class="baseCard -type-2">
+              <div class="baseCard__image ratio ratio-41:25">
+                {% image photo fill-410x250 class="img-ratio" %}
+              </div>
+
+              <div class="baseCard__content mt-30">
+                {% if photo.description %}
+                <p class="mt-15">{{ photo.description|linebreaksbr }}</p>
+                {% endif %}
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+
+
+        </div>
+
+        <!-- <div class="row justify-center pt-100 sm:pt-50"> -->
+        <!--   <div class="col-auto"> -->
+        <!--     <button class="button -md -type-2 -outline-accent-1">LOAD MORE</button> -->
+        <!--   </div> -->
+        <!-- </div> -->
+      </div>
+    </section>
+{% endblock content %}
+
+{% block extra_js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/lightgallery.min.js" integrity="sha512-n02TbYimj64qb98ed5WwkNiSw/i9Xlvv4Ehvhg0jLp3qMAMWCYUHbOMbppZ0vimtyiyw9NqNqxUZC4hq86f4aQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/plugins/thumbnail/lg-thumbnail.min.js" integrity="sha512-jZxB8WysJ6S6e4Hz5IZpAzR1WiflBl0hBxriHGlLkUN32T18+rD1aLNifa1KTll/zx8lIfWVP1NqEjHi/Khy5w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryContainer = document.querySelector('.gallery-grid .row');
+    if (galleryContainer) {
+        lightGallery(galleryContainer, {
+            selector: '.baseCard.-type-2',
+            download: false,
+        });
+    }
+});
+</script>
+{% endblock %}
