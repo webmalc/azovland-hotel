@@ -20,6 +20,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/vendors.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/main.css' %}">
@@ -90,7 +91,7 @@
 	</div>
 	<!-- cursor end -->
 	<main>
-		<header class="header -mx-60 js-header" data-add-bg="bg-dark-2" data-x="header" data-x-toggle="-is-menu-opened" data-anim="fade delay-3">
+    <header class="header -mx-60 js-header {% if page.dark_menu %} bg-dark-2 menu-dark{% endif %}"  {% if not page.dark_menu %}data-add-bg="bg-dark-2"{% endif %} data-x="header" data-x-toggle="-is-menu-opened" data-anim="fade delay-3">
 			<div class="header__container py-50">
 				<div class="headerMobile__left">
           {% main_menu max_levels=2 template="menus/desktop_main_menu.html" add_sub_menus_inline=True %}

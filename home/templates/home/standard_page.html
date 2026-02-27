@@ -1,0 +1,20 @@
+{% extends "base.html" %} 
+{% load wagtailimages_tags wagtailcore_tags static custom_tags humanize %}
+
+{% block content %}
+<section class="layout-pt-lg content">
+      <div data-anim-wrap="" class="container animated">
+        <div class="row">
+          <div class="col-xl-10 col-lg-11">
+            <h2 class="text-64 md:text-40 capitalize" style="">{{ page.title }}</h2>
+
+            <div class="row y-gap-30 pt-60 md:pt-40">
+
+              {{ page.body }}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock content %}

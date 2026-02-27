@@ -103,12 +103,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
+    "django.contrib.humanize",
     # APPS
     "debug_toolbar",
     "wagtailcache",
     "wagtail_html_editor",
     "wagtailmenus",
     # PROJECT
+    "az",
     "home",
     "search",
 ]

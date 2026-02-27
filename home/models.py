@@ -21,6 +21,13 @@ from .blocks import BaseStreamBlock, IconTextItem, ReviewBlock
 #
 
 
+class DarkMenuMixin:
+    dark_menu = True
+
+    class Meta:
+        abstract = True
+
+
 class HomePage(WagtailCacheMixin, Page):
     header_1 = models.CharField(
         max_length=255,
@@ -268,7 +275,7 @@ class GenericSettings(BaseGenericSetting):
         verbose_name = "Контакты"
 
 
-class StandardPage(Page):
+class StandardPage(Page, DarkMenuMixin):
     introduction = models.TextField(
         blank=True,
         verbose_name="Описание",
@@ -352,6 +359,13 @@ class BaseObject(WagtailCacheMixin, Page):
         abstract = True
 
 
+class RoomListPage(WagtailCacheMixin, Page):
+    """List page for rooms."""
+
+    class Meta:
+        verbose_name = "Список номеров"
+
+
 class RoomPage(BaseObject):
     room_size = models.TextField(
         null=False,
@@ -402,6 +416,13 @@ class RoomPage(BaseObject):
 
     class Meta:
         verbose_name = "Номер"
+
+
+class GalleryListPage(WagtailCacheMixin, Page):
+    """List page for gallery."""
+
+    class Meta:
+        verbose_name = "Список галерей"
 
 
 class GalleryPage(BaseObject):
