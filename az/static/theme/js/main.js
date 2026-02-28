@@ -1699,10 +1699,10 @@
   }
 
   const Calendar = (function () {
-    const startYear = 2024
-    const startMonth = 1
+    const startYear = 2026
+    const startMonth = 4
     const monthRange = 12
-    const weekDaysOrder = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    const weekDaysOrder = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
     let calendarEl
 
     function updateVars() {
@@ -1721,7 +1721,7 @@
         }
       )
 
-      let daysInBeginning = weekDaysOrder.indexOf(initialMonthArray[0].weekDay)
+      let daysInBeginning = (new Date(year, month - 1, 1).getDay() || 7) - 1
 
       let testDate = new Date(year, month, 0)
       testDate = new Date(testDate.setDate(0)).toISOString()
@@ -1740,7 +1740,7 @@
         testDate = []
       }
 
-      const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+      const months = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
       let monthName = months[new Date(year, month, 0).getUTCMonth()]
 
       return {
@@ -1788,7 +1788,7 @@
 
                   <div class="elCalendar__month">
                     <div class="elCalendar__header">
-                      ${weekDaysOrder.map(el => `<div class="elCalendar__header__sell">${el}</div>`).join('')}
+                      ${[...weekDaysOrder.slice(1), weekDaysOrder[0]].map(el => `<div class="elCalendar__header__sell">${el}</div>`).join('')}
                     </div>
         
                     <div class="elCalendar__body">

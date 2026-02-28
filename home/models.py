@@ -423,6 +423,10 @@ class RoomPage(BaseObject):
         ]
     )
 
+    @property
+    def similar_rooms(self):
+        return RoomPage.objects.live().exclude(pk=self.pk)
+
     class Meta:
         verbose_name = "Номер"
 

@@ -46,3 +46,23 @@ def multiply(value, arg):
         return float(value) * float(arg)
     except (ValueError, TypeError):
         return ""
+
+
+@register.filter
+def first_half(value):
+    """Return first half of collection"""
+    try:
+        mid = len(value) // 2
+        return value[:mid]
+    except (TypeError, AttributeError):
+        return value
+
+
+@register.filter
+def second_half(value):
+    """Return second half of collection"""
+    try:
+        mid = len(value) // 2
+        return value[mid:]
+    except (TypeError, AttributeError):
+        return []
