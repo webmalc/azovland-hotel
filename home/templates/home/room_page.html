@@ -149,7 +149,7 @@
                 <div class="searchForm__form">
                   <div class="searchFormItem js-select-control js-form-dd">
                     <div class="searchFormItem__button" data-x-click="guests-2">
-                      <div class="js-select-control-chosen">Взрослые (18+)</div>
+                      <div class="js-select-control-chosen">Взрослые</div>
                       <i class="icon-chevron-down ml-40"></i>
                     </div>
                     <div class="searchFormItemDropdown -counter" data-x="guests-2" data-x-toggle="is-active">
@@ -370,7 +370,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const childrenDropdown = document.querySelector('[data-x="guests-3"]');
         const childrenCount = childrenDropdown ? childrenDropdown.querySelector('.js-number').textContent.trim() : '0';
         
-        const url = 'https://azovsky.ru/mbresults/?search_form%5Bhotel%5D=56fbd22174eb5383728b4567&search_form%5Bbegin%5D=' + checkIn + '&search_form%5Bend%5D=' + checkOut + '&search_form%5Badults%5D=' + adultsCount + '&search_form%5Bchildren%5D=' + childrenCount + '&search_form%5BshowSpecs%5D=false&search_form%5BshowSpecs%5D=1&submit=%D0%A3%D0%B7%D0%BD%D0%B0%D1%82%D1%8C+%D1%86%D0%B5%D0%BD%D1%8B';
+        let childrenAgeParams = '';
+        if (childrenCount > 0) {
+            for (let i = 1; i <= parseInt(childrenCount); i++) {
+                childrenAgeParams += '&search_form%5Bchildren_age%5D%5B' + i + '%5D=12';
+            }
+        }
+        
+        const url = 'https://azovsky.ru/mbresults/?search_form%5Bhotel%5D=56fbd22174eb5383728b4567&search_form%5Bbegin%5D=' + checkIn + '&search_form%5Bend%5D=' + checkOut + '&search_form%5Badults%5D=' + adultsCount + '&search_form%5Bchildren%5D=' + childrenCount + childrenAgeParams + '&search_form%5BshowSpecs%5D=false&search_form%5BshowSpecs%5D=1&submit=%D0%A3%D0%B7%D0%BD%D0%B0%D1%82%D1%8C+%D1%86%D0%B5%D0%BD%D1%8B';
         window.location.href = url;
     });
 });
