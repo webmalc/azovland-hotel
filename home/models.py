@@ -298,6 +298,30 @@ class StandardPage(Page, DarkMenuMixin):
         verbose_name = "Страница"
 
 
+class BaseListPage(WagtailCacheMixin, Page, DarkMenuMixin):
+    header = models.CharField(
+        blank=True,
+        verbose_name="Заголовок",
+    )
+    introduction_1 = models.TextField(
+        blank=True,
+        verbose_name="Описание 1",
+    )
+    introduction_2 = models.TextField(
+        blank=True,
+        verbose_name="Описание 2",
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("header"),
+        FieldPanel("introduction_1"),
+        FieldPanel("introduction_2"),
+    ]
+
+    class Meta:
+        abstract = True
+
+
 class BaseObject(WagtailCacheMixin, Page, DarkMenuMixin):
     """Base abstract object."""
 
@@ -344,7 +368,7 @@ class BaseObject(WagtailCacheMixin, Page, DarkMenuMixin):
         abstract = True
 
 
-class RoomListPage(WagtailCacheMixin, Page, DarkMenuMixin):
+class RoomListPage(BaseListPage):
     """List page for rooms."""
 
     class Meta:
@@ -403,7 +427,7 @@ class RoomPage(BaseObject):
         verbose_name = "Номер"
 
 
-class GalleryListPage(WagtailCacheMixin, Page, DarkMenuMixin):
+class GalleryListPage(BaseListPage):
     """List page for gallery."""
 
     class Meta:

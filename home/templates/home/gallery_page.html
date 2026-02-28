@@ -32,7 +32,7 @@
 
           {% for block in page.video_collection %}
           <div class="col-lg-4 col-md-6">
-              <div class="baseCard__image ratio ratio-41:25">
+              <div class="baseCard__image ratio ratio-41:25 videos">
                 <div class="img-ratio">
                 {{ block.value}}
                 </div>
@@ -48,6 +48,8 @@
               <div class="baseCard__image ratio ratio-41:25">
                 {% image photo fill-410x250 class="img-ratio" %}
               </div>
+
+              <h4 class="text-30 md:text-25 mt-15">{{ photo.title }}</h4>
 
               <div class="baseCard__content mt-30">
                 {% if photo.description %}
