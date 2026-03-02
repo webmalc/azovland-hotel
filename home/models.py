@@ -209,14 +209,22 @@ class HomePage(WagtailCacheMixin, Page):
     )
 
 
-@register_setting(icon="comment")
+@register_setting(icon="cog")
 class GenericSettings(BaseGenericSetting):
-    book_link = models.URLField(
+    book_link = models.TextField(
         verbose_name="Ссылка на бронирование",
         blank=True,
     )
     book_link_text = models.CharField(
         verbose_name="Текст ссылки на бронирование",
+        blank=True,
+    )
+    specials_link = models.URLField(
+        verbose_name="Ссылка на специальные предложения",
+        blank=True,
+    )
+    specials_link_text = models.CharField(
+        verbose_name="Текст ссылки на специальные предложения",
         blank=True,
     )
     address_short = models.CharField(
@@ -252,6 +260,8 @@ class GenericSettings(BaseGenericSetting):
             [
                 FieldPanel("book_link"),
                 FieldPanel("book_link_text"),
+                FieldPanel("specials_link"),
+                FieldPanel("specials_link_text"),
                 FieldPanel("address"),
                 FieldPanel("address_short"),
                 FieldPanel("phone"),
@@ -266,7 +276,7 @@ class GenericSettings(BaseGenericSetting):
     ]
 
     class Meta:
-        verbose_name = "Контакты"
+        verbose_name = "Проект"
 
 
 class StandardPage(Page, DarkMenuMixin):

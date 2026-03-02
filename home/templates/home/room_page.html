@@ -33,7 +33,7 @@
       </div>
 
       <div class="col-auto">
-        <a href="https://azovsky.ru/mbresults/?search_form%5Bhotel%5D=56fbd22174eb5383728b4567&search_form%5Bbegin%5D=24.04.2026&search_form%5Bend%5D=27.04.2026&search_form%5Badults%5D=1&search_form%5Bchildren%5D=0&search_form%5BshowSpecs%5D=false&search_form%5BshowSpecs%5D=1&submit=%D0%A3%D0%B7%D0%BD%D0%B0%D1%82%D1%8C+%D1%86%D0%B5%D0%BD%D1%8B">
+        <a href="{% booking_link %}">
           <div data-anim-child="slide-up delay-3" class="fw-500">РАСЧЕТ ЦЕНЫ</div>
         </a>
       </div>
@@ -244,7 +244,7 @@
       </div>
 
       <div data-anim-child="slide-up delay-1" class="col-auto">
-        <button class="button -type-1" onclick="location.href='{% slugurl 'rooms' %}'">
+        <button class="button -type-1" onclick="location.href=''rooms' %}'">
           <i class="-icon icon-arrow-circle-right text-30"></i>
           Посмотреть все
         </button>
@@ -318,6 +318,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.8.3/plugins/thumbnail/lg-thumbnail.min.js" integrity="sha512-jZxB8WysJ6S6e4Hz5IZpAzR1WiflBl0hBxriHGlLkUN32T18+rD1aLNifa1KTll/zx8lIfWVP1NqEjHi/Khy5w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
     const galleryContainer = document.getElementById('roomsPhotos')
     if (galleryContainer) {
       lightGallery(galleryContainer, {
@@ -326,59 +327,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('get-price-btn').addEventListener('click', function() {
-        const calendar = document.querySelector('.js-calendar-el-calendar');
-        const firstDateEl = document.querySelector('.js-first-date');
-        
-        let checkIn = '24.04.2026';
-        let checkOut = '27.04.2026';
-        
-        if (calendar && firstDateEl && firstDateEl.textContent.trim() !== 'Заезд - выезд') {
-            const activeItems = calendar.querySelectorAll('.-is-active');
-            
-            if (activeItems.length >= 2) {
-                const firstItem = activeItems[0];
-                const lastItem = activeItems[activeItems.length - 1];
-                
-                const getFullDate = (item) => {
-                    const day = parseInt(item.querySelector('.js-date').textContent.trim());
-                    const monthStr = item.getAttribute('data-month');
-                    
-                    const monthMap = {'янв': 0, 'фев': 1, 'мар': 2, 'апр': 3, 'май': 4, 'июн': 5, 'июл': 6, 'авг': 7, 'сен': 8, 'окт': 9, 'ноя': 10, 'дек': 11};
-                    const month = monthMap[monthStr];
-                    
-                    const slides = calendar.querySelectorAll('.elCalendar__month');
-                    let year = 2026;
-                    
-                    slides.forEach((slide, slideIndex) => {
-                        if (slide.contains(item)) {
-                            const slideMonthIndex = slideIndex;
-                            year = 4 + slideMonthIndex > 12 ? 2027 : 2026;
-                        }
-                    });
-                    
-                    return ('0' + day).slice(-2) + '.' + ('0' + (month + 1)).slice(-2) + '.' + year;
-                };
-                
-                checkIn = getFullDate(firstItem);
-                checkOut = getFullDate(lastItem);
-            }
+      const adultsCount = document.querySelector('[data-x="guests-2"]').querySelector('.js-number').textContent.trim();
+      const childrenCount = document.querySelector('[data-x="guests-3"]').querySelector('.js-number').textContent.trim();
+      const begin = document.querySelector('.js-first-date').getAttribute('data-date');
+      const end = document.querySelector('.js-last-date').getAttribute('data-date');
+
+      let url = '{% booking_link %}'.replace(/&amp;/g, "&");
+      const urlObj = new URL(url);
+      const params = urlObj.searchParams;
+      let changed = false;
+      if (begin) {
+        params.set('search_form[begin]', begin);
+        changed = true;
+      }
+      if (end) {
+        params.set('search_form[end]', end);
+        changed = true;
+      }
+      if (adultsCount > 1) {
+        params.set('search_form[adults]', adultsCount);
+        changed = true;
+      }
+      if (childrenCount > 0) {
+        params.set('search_form[children]', childrenCount);
+        for (let i = 1; i <= parseInt(childrenCount); i++) {
+            params.append('search_form[children_age][' + i + ']', '12');
         }
-        
-        const adultsDropdown = document.querySelector('[data-x="guests-2"]');
-        const adultsCount = adultsDropdown ? adultsDropdown.querySelector('.js-number').textContent.trim() : '1';
-        
-        const childrenDropdown = document.querySelector('[data-x="guests-3"]');
-        const childrenCount = childrenDropdown ? childrenDropdown.querySelector('.js-number').textContent.trim() : '0';
-        
-        let childrenAgeParams = '';
-        if (childrenCount > 0) {
-            for (let i = 1; i <= parseInt(childrenCount); i++) {
-                childrenAgeParams += '&search_form%5Bchildren_age%5D%5B' + i + '%5D=12';
-            }
-        }
-        
-        const url = 'https://azovsky.ru/mbresults/?search_form%5Bhotel%5D=56fbd22174eb5383728b4567&search_form%5Bbegin%5D=' + checkIn + '&search_form%5Bend%5D=' + checkOut + '&search_form%5Badults%5D=' + adultsCount + '&search_form%5Bchildren%5D=' + childrenCount + childrenAgeParams + '&search_form%5BshowSpecs%5D=false&search_form%5BshowSpecs%5D=1&submit=%D0%A3%D0%B7%D0%BD%D0%B0%D1%82%D1%8C+%D1%86%D0%B5%D0%BD%D1%8B';
-        window.location.href = url;
+        changed = true;
+      }
+      if (changed) {
+        url = urlObj.toString();
+      }
+
+      window.location.href = url;
     });
 });
 </script>

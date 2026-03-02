@@ -1,7 +1,40 @@
+from datetime import datetime, timedelta
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+
 from django import template
+from django.core.cache import cache
 from wagtail.images import get_image_model
 
+from home.models import GenericSettings
+
 register = template.Library()
+
+
+@register.simple_tag
+def booking_link():
+    today = datetime.today().date()
+    date_format = "%d.%m.%Y"
+    value = cache.get(today.strftime(date_format))
+    if value:
+        return value
+
+    settings = GenericSettings.load()
+    url = settings.book_link
+    if not url:
+        return ""
+    parsed_url = urlparse(settings.book_link)
+    params = parse_qs(parsed_url.query)
+    begin = datetime.strptime(params["search_form[begin]"][0], "%d.%m.%Y").date()
+    if today > begin:
+        end = today + timedelta(days=3)
+        params["search_form[begin]"] = [today.strftime("%d.%m.%Y")]
+        params["search_form[end]"] = [end.strftime("%d.%m.%Y")]
+        new_query = urlencode(params, doseq=True)
+
+        url = urlunparse(parsed_url._replace(query=new_query))
+
+    cache.set(today.strftime(date_format), url, 60 * 60 * 24)
+    return url
 
 
 @register.simple_tag

@@ -1741,12 +1741,20 @@
       }
 
       const months = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
-      let monthName = months[new Date(year, month, 0).getUTCMonth()]
+      let d = new Date(year, month, 0).getUTCMonth();
+      let monthName = months[d]
+      let monthNameMinus = months.at(d - 1)
+      let monthNumber = (d + 1).toString().padStart(2, '0')
+      let monthNumberMinus = (d).toString().padStart(2, '0')
 
       return {
         monthName,
+        monthNameMinus,
         initialMonthArray,
-        firstDates: testDate
+        firstDates: testDate,
+        monthNumber,
+        monthNumberMinus,
+        year,
       }
     }
 
@@ -1775,7 +1783,6 @@
           globalIndex = globalIndex + 1
           return globalIndex
         }
-
         calendarGrid.innerHTML += `
         <div class="elCalendar__slider js-calendar-slider">
           <div class="swiper-wrapper">
@@ -1794,7 +1801,7 @@
                     <div class="elCalendar__body">
                       ${month.firstDates.map(el => `
                         <div
-                          data-index="${globalIndexUp()}" data-week="${el.weekDay}" data-month="${month.monthName.slice(0, 3)}"
+                          data-index="${globalIndexUp()}" data-date="${el.dayNum.toString().padStart(2, '0')}.${month.monthNumberMinus}.${month.year}" data-week="${el.weekDay}" data-month="${month.monthNameMinus.slice(0, 3)}"
                           class="elCalendar__sell -dark"
                         >
                           <span class="js-date">
@@ -1805,7 +1812,7 @@
         
                       ${month.initialMonthArray.map(el => `
                         <div
-                          data-index="${globalIndexUp()}" data-week="${el.weekDay}" data-month="${month.monthName.slice(0, 3)}"
+                          data-index="${globalIndexUp()}" data-date="${el.dayNum.toString().padStart(2, '0')}.${month.monthNumber}.${month.year}" data-week="${el.weekDay}" data-month="${month.monthName.slice(0, 3)}"
                           class="elCalendar__sell"
                         >
                           <span class="js-date">
@@ -1919,6 +1926,8 @@
 
             if (firstDate) firstDate.innerHTML = `${firstItem.getAttribute('data-week')} ${firstItem.querySelector('.js-date').innerHTML} ${firstItem.getAttribute('data-month')}`
             if (lastDate) lastDate.innerHTML = `${lastItem.getAttribute('data-week')} ${lastItem.querySelector('.js-date').innerHTML} ${lastItem.getAttribute('data-month')}`
+            if (firstDate) firstDate.setAttribute('data-date', firstItem.getAttribute('data-date'));
+            if (lastDate) lastDate.setAttribute('data-date', lastItem.getAttribute('data-date'));
 
             completeState = true
           }

@@ -45,7 +45,7 @@
 		</div>
 		<div class="menuFullScreen__mobile__bg js-menuFullScreen-mobile-bg"></div>
 		<div class="menuFullScreen__left">
-			<div class="menuFullScreen__bg js-menuFullScreen-bg"> <img src="{% static 'theme/img/menu/bg.png' %}" alt="image"> </div>
+			<div class="menuFullScreen__bg js-menuFullScreen-bg" style="background-color:#122223;"></div>
 			<button class="menuFullScreen__close js-menuFullScreen-toggle js-menuFullScreen-close-btn"> <span class="icon">
                 <span></span> <span></span> </span> ЗАКРЫТЬ </button>
       {% main_menu max_levels=2 template="menus/mobile_main_menu.html" add_sub_menus_inline=True %}
@@ -72,7 +72,7 @@
 			</div>
 		</div>
 		<div class="menuFullScreen__bottomMobile js-menuFullScreen-buttomMobile">
-			<button class="button rounded-200 w-1/1 py-20 -light-1 bg-accent-2" onclick="location.href='{{ settings.book_link }}'"> {{ settings.book_link_text }}</button>
+			<button class="button rounded-200 w-1/1 py-20 -light-1 bg-accent-2" onclick="location.href='{{ settings.specials_link }}'">{{ settings.specials_link_text }}</button>
       <a href="tel:{{ settings.phone|cut:' ' }}" class="d-flex items-center mt-40"> <i class="icon-phone mr-10"></i> <span>{{ settings.phone }}</span> </a>
 			<a href="home-9.html#" class="d-flex mt-20"> <i class="icon-map mr-10"></i> <span>
               {{ settings.address|linebreaksbr }}
@@ -99,13 +99,11 @@
 				<div class="header__center">
 					<div class="header__logo">
             <div class="text__logo">«Азовский»<span>Курортный комплекс</span></div>
-            <!-- <img src="{% static 'theme/img/general/logo-header-9.svg' %}" alt="logo"> -->
           </div>
 				</div>
 				<div class="header__right d-flex items-center h-full">
           <button class="button text-white mr-60 lg:d-none"> <i class="icon-phone mr-15"></i> {{ settings.phone }}</button>
-					<!-- <button class="button text-white mr-60 lg:mr-0"> EN <i class="icon-chevron-down ml-15"></i> </button> -->
-          <button class="button -md -blur-1 text-white rounded-200 mr-30 lg:d-none" onclick="location.href='{{ settings.book_link }}'"> {{ settings.book_link_text }} </button>
+          <button class="button -md -blur-1 text-white rounded-200 mr-30 lg:d-none" onclick="location.href='{{ settings.specials_link }}'"> {{ settings.specials_link_text }} </button>
 				</div>
 			</div>
 		</header> 
