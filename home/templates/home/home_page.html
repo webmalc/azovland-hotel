@@ -518,7 +518,7 @@
             {% collection_images page.featured_photos_3 as featured_photos_3 %}
             {% for photo in featured_photos_3|slice:"5" %}
             <div class="w-1/5 md:w-1/2 sm:w-1/1">
-                <a href="http://vk.com/azovsky" class="ratio ratio-1:1" data-anim-child="img-right cover-white delay-2">
+              <a href="{{ settings.social_vk }}" class="ratio ratio-1:1" data-anim-child="img-right cover-white delay-2">
                     {% image photo fill-293x301 class="img-ratio rounded-16" %}
                 </a>
             </div>
