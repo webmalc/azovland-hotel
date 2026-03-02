@@ -24,6 +24,9 @@ services:
       - static_volume:/app/static
       - media_volume:/app/media
       - gunicorn_socket:/var/run/gunicorn
+    command: >
+      sh -c "uv run manage.py collectstatic --no-input --clear &&
+            .venv/bin/gunicorn az.wsgi:application"
     logging: *default-logging
     depends_on:
       - db

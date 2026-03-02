@@ -15,6 +15,5 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 COPY . .
 
-RUN uv run manage.py collectstatic --no-input --clear
-
-ENTRYPOINT [".venv/bin/gunicorn", "az.wsgi:application"]
+# RUN uv run manage.py collectstatic --no-input --clear
+# ENTRYPOINT [".venv/bin/gunicorn", "az.wsgi:application"]

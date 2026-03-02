@@ -15,14 +15,14 @@ from wagtailcache.cache import WagtailCacheMixin
 from .blocks import BaseStreamBlock, IconTextItem, ReviewBlock
 
 
-class DarkMenuMixin:
-    dark_menu = True
+class TransparentMenuMixin:
+    transparent_menu = True
 
     class Meta:
         abstract = True
 
 
-class HomePage(WagtailCacheMixin, Page):
+class HomePage(WagtailCacheMixin, Page, TransparentMenuMixin):
     header_1 = models.CharField(
         max_length=255,
         blank=True,
@@ -279,7 +279,7 @@ class GenericSettings(BaseGenericSetting):
         verbose_name = "Проект"
 
 
-class StandardPage(Page, DarkMenuMixin):
+class StandardPage(Page):
     introduction = models.TextField(
         blank=True,
         verbose_name="Описание",
@@ -308,7 +308,7 @@ class StandardPage(Page, DarkMenuMixin):
         verbose_name = "Страница"
 
 
-class BaseListPage(WagtailCacheMixin, Page, DarkMenuMixin):
+class BaseListPage(WagtailCacheMixin, Page):
     header = models.CharField(
         blank=True,
         verbose_name="Заголовок",
@@ -332,7 +332,7 @@ class BaseListPage(WagtailCacheMixin, Page, DarkMenuMixin):
         abstract = True
 
 
-class BaseObject(WagtailCacheMixin, Page, DarkMenuMixin):
+class BaseObject(WagtailCacheMixin, Page):
     """Base abstract object."""
 
     introduction = models.TextField(

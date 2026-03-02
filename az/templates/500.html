@@ -1,13 +1,17 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8" />
-        <title>Internal server error</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-    </head>
-    <body>
-        <h1>Internal server error</h1>
+{% extends "base.html" %}
 
-        <h2>Sorry, there seems to be an error. Please try again soon.</h2>
-    </body>
-</html>
+{% block title %}Извините, похоже, произошла ошибка.{% endblock %}
+
+{% block content %}
+    <section class="layout-pt-lg content">
+          <div data-anim-wrap="" class="container animated">
+            <div class="row">
+              <div class="col-xl-10 col-lg-11">
+                <h2 class="row text-64 md:text-40" style="">
+                Извините, похоже, произошла ошибка.
+                </h2>
+              </div>
+            </div>
+          </div>
+    </section>
+{% endblock %}

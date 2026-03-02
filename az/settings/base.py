@@ -110,6 +110,7 @@ INSTALLED_APPS = [
     "wagtail_html_editor",
     "wagtailmenus",
     # PROJECT
+    "az",
     "home",
     "search",
 ]
