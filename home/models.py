@@ -300,8 +300,8 @@ class StandardPage(Page):
     )
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
-        FieldPanel("body"),
         FieldPanel("image"),
+        FieldPanel("body"),
     ]
 
     class Meta:

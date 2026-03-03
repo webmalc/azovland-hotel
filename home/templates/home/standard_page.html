@@ -2,19 +2,41 @@
 {% load wagtailimages_tags wagtailcore_tags static custom_tags humanize %}
 
 {% block content %}
-<section class="layout-pt-lg content">
-      <div data-anim-wrap="" class="container animated">
-        <div class="row">
-          <div class="col-xl-10 col-lg-11">
-            <h2 class="text-64 md:text-40 capitalize" style="">{{ page.title }}</h2>
+{% if page.image %}
+<section data-anim-wrap class="pageHero -type-2 -items-center">
+  <div data-anim-child="img-right cover-white delay-1" class="pageHero__bg">
+    {% image page.image width-1920 %}
+  </div>
 
-            <div class="row y-gap-30 pt-60 md:pt-40">
-
-              {{ page.body }}
-
-            </div>
-          </div>
+  <div class="container">
+    <div class="row justify-center">
+      <div class="col-auto">
+        <div class="pageHero__content text-center">
+          <h1 class="pageHero__title lh-11 capitalize text-white">
+            {{page.title}}
+          </h1>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="layout-pt-lg content" {% if page.image %}style="margin-top: 0px; padding-top: 0px;"{%endif%}>
+  <div data-anim-wrap="" class="container animated">
+    <div class="row">
+      <div class="col-xl-10 col-lg-11">
+        {% if not page.image %}
+        <h2 class="text-64 md:text-40 capitalize" style="">{{ page.title }}</h2>
+        {% endif %}
+
+        <div class="row y-gap-30 pt-60 md:pt-40">
+
+          {{ page.body }}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock content %}

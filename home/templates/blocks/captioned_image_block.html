@@ -2,5 +2,7 @@
 
 <figure>
     {% picture self.image format-{avif,webp,jpeg} fill-{400x220,600x338} sizes="(max-width: 768px) 200px, 900px" loading="lazy" %}
-    <figcaption>{{ self.caption }} - {{ self.attribution }}</figcaption>
+    {% if self.caption %}
+      <figcaption>{{ self.caption }} - {{ self.attribution }}</figcaption>
+    {% endif %}
 </figure>
