@@ -3,6 +3,7 @@ from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
     IntegerBlock,
+    ListBlock,
     RichTextBlock,
     StreamBlock,
     StructBlock,
@@ -52,7 +53,7 @@ class IconTextItem(StructBlock):
 class CaptionedImageBlock(StructBlock):
     image = ImageChooserBlock(
         required=True,
-        label="Изображение",
+        label="Изображение с подписью",
     )
     caption = CharBlock(
         required=False,
@@ -153,6 +154,14 @@ class BaseStreamBlock(StreamBlock):
     )
     html_block = EnhancedHTMLBlock(
         label="Код HTML",
+    )
+    images_block = ListBlock(
+        ImageChooserBlock(),
+        min_num=1,
+        max_num=3,
+        icon="image",
+        label="Галерея",
+        template="blocks/images_block.html",
     )
     image_block = CaptionedImageBlock()
     block_quote = BlockQuote()

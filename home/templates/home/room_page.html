@@ -66,6 +66,7 @@
           {{ page.introduction|linebreaksbr }}
         </p>
 
+        {% if page.features %}
         <div class="line -horizontal bg-border mt-50 mb-50"></div>
         <h2 class="text-40">Комплекс услуг «Всё включено»</h2>
         <div class="row x-gap-50 y-gap-20 justify-between pt-40">
@@ -99,6 +100,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
 
         {% if page.body %}
           <div class="line -horizontal bg-border mt-50 mb-50"></div>

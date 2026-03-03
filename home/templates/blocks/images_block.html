@@ -1,0 +1,30 @@
+{% load wagtailimages_tags %}
+{% with total=value|length %}
+
+{% if total == 3 %}
+  <div class="imageGrid -type-4">
+      {% for photo in value %}
+          {% image photo fill-600x500 %}
+      {% endfor %}
+  </div>
+{% elif total == 2 %}
+  <div class="row justify-center">
+    <div class="col-xl-10 col-lg-9 col-md-10">
+      <div class="row x-gap-20 y-gap-20">
+        {% for photo in value %}
+          <div class="col-sm-6">
+            {% image photo fill-450x500 %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% elif total == 1 %}
+  <div class="row justify-center">
+    <div class="col-xl-10 col-lg-9 col-md-10">
+      {% image value.0 fill-600x600 %}
+    </div>
+  </div>
+{% endif %}
+
+{% endwith %}

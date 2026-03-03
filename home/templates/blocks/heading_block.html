@@ -4,13 +4,9 @@
 {% endcomment %}
 
 {% if self.size == 'h2' %}
-    <h2 class="text-40 mb-30">{{ self.heading_text }}</h2>
-
-
+    <h2 class="text-40 mb-30 mt-60">{{ self.heading_text }}</h2>
 {% elif self.size == 'h3' %}
-    <h3 class="text-40 mb-30" >{{ self.heading_text }}</h3>
-
+    <h3 class="text-40 mb-20 mt-60" >{{ self.heading_text }}</h3>
 {% elif self.size == 'h4' %}
-    <h4 class="text-40 mb-30">{{ self.heading_text }}</h4>
-
+    <h4 class="text-40 mb-20 mt-30">{{ self.heading_text }}</h4>
 {% endif %}
