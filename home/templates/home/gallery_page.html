@@ -28,11 +28,11 @@
 
     <section class="gallery-grid">
       <div class="container">
-        <div class="row y-gap-85 x-gap-85">
+        <div class="row y-gap-20 x-gap-20">
 
           {% for block in page.video_collection %}
           <div class="col-lg-4 col-md-6">
-              <div class="baseCard__image ratio ratio-41:25 videos">
+              <div class="baseCard__image ratio ratio-41:50 videos">
                 <div class="img-ratio">
                 {{ block.value}}
                 </div>
@@ -45,17 +45,15 @@
           <div class="col-lg-4 col-md-6">
             {% image photo width-1920 as full_img %}
             <a href="{{ full_img.url }}" class="baseCard -type-2">
-              <div class="baseCard__image ratio ratio-41:25">
-                {% image photo fill-410x250 class="img-ratio" %}
+              <div class="baseCard__image ratio ratio-41:50">
+                {% image photo fill-410x500 class="img-ratio" %}
               </div>
 
-              <h4 class="text-30 md:text-25 mt-15">{{ photo.title }}</h4>
-
-              <div class="baseCard__content mt-30">
-                {% if photo.description %}
-                <p class="mt-15">{{ photo.description|linebreaksbr }}</p>
-                {% endif %}
-              </div>
+              {% if photo.description %}
+                <div class="baseCard__content">
+                  <p class="mt-15">{{ photo.description|linebreaksbr }}</p>
+                </div>
+              {% endif %}
             </a>
           </div>
           {% endfor %}
