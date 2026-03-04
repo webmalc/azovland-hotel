@@ -3,8 +3,39 @@
 
 
 {% block content %}
+
+{% if page.image %}
+<section data-anim-wrap class="pageHero -type-2 -items-center">
+  <div data-anim-child="img-right cover-white delay-1" class="pageHero__bg">
+    {% image page.image width-1920 %}
+  </div>
+
+  <div class="container">
+    <div class="row justify-center">
+      <div class="col-auto">
+        <div class="pageHero__content text-center">
+
+          {% if page.introduction_1 %}
+          <div class="pageHero__subtitle text-white mb-40">{{ page.introduction_1|upper}}</div>
+          {% endif %}
+
+          <h1 class="pageHero__title lh-11 capitalize text-white">
+            {{page.title}}
+          </h1>
+          {% if page.introduction_2 %}
+          <div class="pageHero__subtitle text-white mt-40">{{ page.introduction_2|upper }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <section class="layout-pt-lg layout-pb-lg">
   <div data-anim-wrap class="container">
+
+{% if not page.image %}
     <div class="row justify-center text-center">
       <div class="col-xl-6 col-lg-8 col-md-10">
         {% if page.header %}
@@ -22,6 +53,7 @@
         {% endif %}
       </div>
     </div>
+{% endif %}
 
     <div class="row x-gap-60 y-gap-60 pt-100 sm:pt-50">
 

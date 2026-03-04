@@ -15,6 +15,9 @@
           <h1 class="pageHero__title lh-11 capitalize text-white">
             {{page.title}}
           </h1>
+          {% if page.introduction %}
+          <div class="pageHero__subtitle text-white mt-40">{{ page.introduction|upper}}</div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -22,36 +25,19 @@
 </section>
 {% endif %}
 
-    <section class="layout-pt-lg layout-pb-lg content" {% if page.image %}style="margin-top: 0px; padding-top: 0px;"{%endif%}>
-      <div class="container">
-        <div class="row justify-center">
-          <div class="col-xl-8 col-lg-9 col-md-10">
-            <div>
-                {% if not page.image %}
-                <h2 class="text-64 md:text-40 capitalize" style="">{{ page.title }}</h2>
-                {% endif %}
+<section class="layout-pt-lg layout-pb-lg content" {% if page.image %}style="margin-top: 0px; padding-top: 0px;"{%endif%}>
+  <div class="container">
+    <div class="row justify-center">
+      <div class="col-xl-8 col-lg-9 col-md-10">
+        <div>
+            {% if not page.image %}
+            <h2 class="text-64 md:text-40 capitalize" style="">{{ page.title }}</h2>
+            {% endif %}
 
-                {{ page.body }}
-            </div>
-          </div>
+            {{ page.body }}
         </div>
       </div>
-    </section>
-<!-- <section class="layout-pt-lg content" {% if page.image %}style="margin-top: 0px; padding-top: 0px;"{%endif%}> -->
-<!--   <div data-anim-wrap="" class="container animated"> -->
-<!--     <div class="row"> -->
-<!--       <div class="col-xl-10 col-lg-11"> -->
-<!--         {% if not page.image %} -->
-<!--         <h2 class="text-64 md:text-40 capitalize" style="">{{ page.title }}</h2> -->
-<!--         {% endif %} -->
-<!---->
-<!--         <div class="row y-gap-30 pt-60 md:pt-40"> -->
-<!---->
-<!--           {{ page.body }} -->
-<!---->
-<!--         </div> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </section> -->
+    </div>
+  </div>
+</section>
 {% endblock content %}

@@ -37,7 +37,7 @@
   <div class="container">
     <div class="row y-gap-85 x-gap-85">
 
-      {% for page in page.get_children %}
+      {% for page in children %}
       {% with page=page.specific %}
 
       <div class="col-lg-4 col-md-6">
@@ -85,6 +85,26 @@
     <!--     <button class="button -md -type-2 -outline-accent-1">LOAD MORE</button> -->
     <!--   </div> -->
     <!-- </div> -->
+
+    {% if children.has_other_pages %}
+    <nav class="pagination" aria-label="Pagination">
+      <div class="row justify-center pt-100 sm:pt-50">
+
+              {% if children.has_previous %}
+                  <div class="col-auto">
+                    <button class="button -md -type-2 -outline-accent-1" onclick="location.href='?page={{ children.previous_page_number }}'">ЕЩЁ</button>
+                  </div>
+              {% endif %}
+
+              {% if children.has_next %}
+                  <div class="col-auto">
+                    <button class="button -md -type-2 -outline-accent-1" onclick="location.href='?page={{ children.next_page_number }}'">НАЗАД</button>
+                  </div>
+              {% endif %}
+
+      </div>
+    </nav>
+    {% endif %}
   </div>
 </section>
 {% endblock content %}

@@ -1,3 +1,7 @@
+from re import S
+
+from django.conf import settings
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
 from wagtail import blocks
 from wagtail.admin.panels import (
@@ -279,6 +283,62 @@ class GenericSettings(BaseGenericSetting):
         verbose_name = "Проект"
 
 
+class BaseListPage(WagtailCacheMixin, Page):
+    header = models.CharField(
+        blank=True,
+        verbose_name="Заголовок",
+    )
+    introduction_1 = models.TextField(
+        blank=True,
+        verbose_name="Описание 1",
+    )
+    introduction_2 = models.TextField(
+        blank=True,
+        verbose_name="Описание 2",
+    )
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Титульное изображение",
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("introduction_1"),
+        FieldPanel("header"),
+        FieldPanel("introduction_2"),
+        FieldPanel("image"),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class StandardListPage(BaseListPage):
+    """List page for standard pages."""
+
+    def paginate(self, request, *_):
+        page = request.GET.get("page")
+        paginator = Paginator(self.get_children(), settings.PROJECT_PAGE_SIZE)
+        try:
+            pages = paginator.page(page)
+        except PageNotAnInteger:
+            pages = paginator.page(1)
+        except EmptyPage:
+            pages = paginator.page(paginator.num_pages)
+        return pages
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        context["children"] = self.paginate(request, self.get_children())
+        return context
+
+    class Meta:
+        verbose_name = "Список страниц"
+
+
 class StandardPage(Page):
     introduction = models.TextField(
         blank=True,
@@ -306,30 +366,6 @@ class StandardPage(Page):
 
     class Meta:
         verbose_name = "Страница"
-
-
-class BaseListPage(WagtailCacheMixin, Page):
-    header = models.CharField(
-        blank=True,
-        verbose_name="Заголовок",
-    )
-    introduction_1 = models.TextField(
-        blank=True,
-        verbose_name="Описание 1",
-    )
-    introduction_2 = models.TextField(
-        blank=True,
-        verbose_name="Описание 2",
-    )
-
-    content_panels = Page.content_panels + [
-        FieldPanel("header"),
-        FieldPanel("introduction_1"),
-        FieldPanel("introduction_2"),
-    ]
-
-    class Meta:
-        abstract = True
 
 
 class BaseObject(WagtailCacheMixin, Page):

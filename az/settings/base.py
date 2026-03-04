@@ -274,3 +274,5 @@ LOGGING = {
         },
     },
 }
+# Project custom
+PROJECT_PAGE_SIZE = 20
