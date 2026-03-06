@@ -1,0 +1,27 @@
+- name: Setup passwordless sudo user
+  hosts: all
+  vars:
+    ansible_user: root
+  tasks:
+    - name: Ensure the user exists
+      ansible.builtin.user:
+        name: "{{ ansible_new_user }}"
+        shell: /bin/bash
+        groups: sudo
+        append: true
+        create_home: true
+
+    - name: Configure passwordless sudo for the user
+      ansible.builtin.copy:
+        content: "{{ ansible_new_user }} ALL=(ALL) NOPASSWD: ALL"
+        dest: "/etc/sudoers.d/{{ ansible_new_user }}"
+        mode: "0440"
+        owner: root
+        group: root
+        validate: "visudo -cf %s"
+
+    - name: Add authorized key
+      ansible.posix.authorized_key:
+        user: "{{ ansible_new_user }}"
+        state: present
+        key: "{{ lookup('ansible.builtin.file', '../files/deploy.pub') }}"

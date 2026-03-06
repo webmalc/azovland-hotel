@@ -1,0 +1,12 @@
+- name: Harden OS
+  hosts: all
+  become: true
+  roles:
+    - role: devsec.hardening.os_hardening
+      vars:
+        os_ignore_users: ["{{ ansible_user }}"]
+        sysctl_overwrite:
+          net.ipv4.ip_forward: 1
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.disable_ipv6: 0
+          net.ipv6.conf.default.disable_ipv6: 0

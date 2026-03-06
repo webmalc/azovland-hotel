@@ -1,0 +1,9 @@
+production:
+  hosts:
+    web_1:
+      ansible_host: 192.168.0.1
+      ansible_port: 1111
+  vars:
+    ansible_user: deploy
+    ansible_new_user: deploy
+    ansible_new_ssh_port: 1111

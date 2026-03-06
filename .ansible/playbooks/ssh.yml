@@ -1,0 +1,12 @@
+- name: Harden SSH
+  hosts: all
+  vars:
+    ansible_user: root
+    ansible_port: 22
+  roles:
+    - role: devsec.hardening.ssh_hardening
+      vars:
+        ssh_server_password_login: false
+        ssh_permit_root_login: "yes"
+        ssh_allow_tcp_forwarding: false
+        ssh_server_ports: ["{{ ansible_new_ssh_port }}"]

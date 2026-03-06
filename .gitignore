@@ -214,3 +214,10 @@ __marimo__/
 .docker/web/web.env
 .docker/monitoring/monitoring.env
 .docker/monitoring/alertmanager.yml
+
+# Ansible
+.ansible/collections
+.ansible/roles
+.ansible/inventory.yml
+.ansible/files/*.pub
+
