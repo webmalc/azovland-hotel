@@ -1,0 +1,2 @@
+new_user: "user"
+ssh_key_name: "deploy.pub"

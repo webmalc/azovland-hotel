@@ -7,16 +7,23 @@ web_env := web.env
 monitoring_env := monitoring.env
 compose_env := .env
 alertmanager_env := alertmanager.yml
+ansible_inventory := '.ansible/inventory/inventory.yml'
+ansible_group_vars := '.ansible/inventory/group_vars/production.yml'
 env := .env
 
 check_env:
-	@echo "Check docker env files..."
-	@test ! -f '.docker/db/${db_env}' && (echo 'Must copy file ...'; cp -v .docker/db/${db_env}.dist .docker/db/${db_env}) || echo 'File .docker/db/'${db_env} 'exists.'
-	@test ! -f '.docker/web/${web_env}' && (echo 'Must copy file ...'; cp -v .docker/web/${web_env}.dist .docker/web/${web_env}) || echo 'File .docker/web/'${web_env} 'exists.'
-	@test ! -f '.docker/monitoring/${monitoring_env}' && (echo 'Must copy file ...'; cp -v .docker/monitoring/${monitoring_env}.dist .docker/monitoring/${monitoring_env}) || echo 'File .docker/monitoring/'${monitoring_env} 'exists.'
-	@test ! -f '.docker/monitoring/${alertmanager_env}' && (echo 'Must copy file ...'; cp -v .docker/monitoring/${alertmanager_env}.dist .docker/monitoring/${alertmanager_env}) || echo 'File .docker/monitoring/'${alertmanager_env} 'exists.'
-	@test ! -f '.docker/${compose_env}' && (echo 'Must copy file ...'; cp -v .docker/${compose_env}.dist .docker/${compose_env}) || echo 'File .docker/'${compose_env} 'exists.'
-	@test ! -f './${env}' && (echo 'Must copy file ...'; cp -v ./${env}.dist ./${env}) || echo 'File ./'${env} 'exists.'
+	@echo "------------Docker--------------\n"
+	@echo ""
+	@test ! -f '.docker/db/${db_env}' && (echo '!!!!!!!! Must copy file ...'; cp -v .docker/db/${db_env}.dist .docker/db/${db_env}) || echo 'File .docker/db/'${db_env} 'exists.'
+	@test ! -f '.docker/web/${web_env}' && (echo '!!!!!!!! Must copy file ...'; cp -v .docker/web/${web_env}.dist .docker/web/${web_env}) || echo 'File .docker/web/'${web_env} 'exists.'
+	@test ! -f '.docker/monitoring/${monitoring_env}' && (echo '!!!!!!!! Must copy file ...'; cp -v .docker/monitoring/${monitoring_env}.dist .docker/monitoring/${monitoring_env}) || echo 'File .docker/monitoring/'${monitoring_env} 'exists.'
+	@test ! -f '.docker/monitoring/${alertmanager_env}' && (echo '!!!!!!!! Must copy file ...'; cp -v .docker/monitoring/${alertmanager_env}.dist .docker/monitoring/${alertmanager_env}) || echo 'File .docker/monitoring/'${alertmanager_env} 'exists.'
+	@test ! -f '.docker/${compose_env}' && (echo '!!!!!!!! Must copy file ...'; cp -v .docker/${compose_env}.dist .docker/${compose_env}) || echo 'File .docker/'${compose_env} 'exists.'
+	@echo "\n------------Ansible--------------\n"
+	@test ! -f ${ansible_inventory} && echo '!!!!!!!! ${ansible_inventory} does not exist' || echo 'File ${ansible_inventory} exists.'
+	@test ! -f ${ansible_group_vars} && echo '!!!!!!!! ${ansible_group_vars} does not exist' || echo 'File ${ansible_group_vars} exists.'
+	@echo "\n------------Project--------------\n"
+	@test ! -f './${env}' && (echo '!!!!!!!! Must copy file ...'; cp -v ./${env}.dist ./${env}) || echo 'File ./'${env} 'exists.'
 
 infra:
 	$(docker_infra_dev) up

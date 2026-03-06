@@ -218,7 +218,7 @@ __marimo__/
 # Ansible
 .ansible/collections_galaxy
 .ansible/roles_galaxy
-.ansible/group_vars/production.yml
+.ansible/inventory/group_vars/production.yml
 .ansible/inventory/inventory.yml
-.ansible/files/*.pub
+*.pub
 
