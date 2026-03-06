@@ -216,8 +216,8 @@ __marimo__/
 .docker/monitoring/alertmanager.yml
 
 # Ansible
-.ansible/collections
-.ansible/roles
+.ansible/collections_galaxy
+.ansible/roles_galaxy
 .ansible/group_vars/production.yml
 .ansible/inventory.yml
 .ansible/files/*.pub
