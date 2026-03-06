@@ -1,0 +1,4 @@
+ansible_new_user: user
+ansible_new_ssh_port: 1111
+ansible_user: user
+ansible_port: 1111

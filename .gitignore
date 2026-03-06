@@ -218,6 +218,7 @@ __marimo__/
 # Ansible
 .ansible/collections
 .ansible/roles
+.ansible/group_vars/production.yml
 .ansible/inventory.yml
 .ansible/files/*.pub
 
