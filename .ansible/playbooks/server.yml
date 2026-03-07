@@ -3,6 +3,7 @@
   become: true
   roles:
     - role: devsec.hardening.os_hardening
+      tags: os
       vars:
         os_ignore_users: ["{{ ansible_user }}"]
         sysctl_overwrite:
@@ -10,4 +11,17 @@
           net.ipv6.conf.all.forwarding: 1
           net.ipv6.conf.all.disable_ipv6: 0
           net.ipv6.conf.default.disable_ipv6: 0
-      tags: os
+    - role: fish
+      become: false
+      tags: [fish, packages]
+  tasks:
+    - name: install htop
+      ansible.builtin.package:
+        name: htop
+        state: present
+      tags: [htop, packages]
+    - name: install git
+      ansible.builtin.package:
+        name: git
+        state: present
+      tags: [git, packages]

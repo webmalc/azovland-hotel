@@ -1,0 +1,22 @@
+- name: install fish
+  ansible.builtin.package:
+    name: fish
+    state: present
+  become: true
+
+- name: fish shell path
+  ansible.builtin.command: which fish
+  register: fish_path
+  changed_when: false
+  check_mode: no
+
+- name: check fish is installed
+  ansible.builtin.fail:
+    msg: "fish shell is not installed."
+  when: fish_path.rc != 0
+
+- name: change shell to fish for current user ({{ ansible_user_id }})
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: "{{ fish_path.stdout }}"
+  become: true
