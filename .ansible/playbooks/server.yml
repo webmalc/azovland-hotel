@@ -11,15 +11,21 @@
           net.ipv6.conf.all.forwarding: 1
           net.ipv6.conf.all.disable_ipv6: 0
           net.ipv6.conf.default.disable_ipv6: 0
+
     - role: fish
       become: false
       tags: [fish, packages]
+
+    - role: geerlingguy.docker
+      tags: [docker, packages]
+
   tasks:
     - name: install htop
       ansible.builtin.package:
         name: htop
         state: present
       tags: [htop, packages]
+
     - name: install git
       ansible.builtin.package:
         name: git
