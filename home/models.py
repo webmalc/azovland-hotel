@@ -393,12 +393,15 @@ class BaseObject(WagtailCacheMixin, Page):
         blank=True,
         use_json_field=True,
     )
-    collection = models.ForeignKey(
-        Collection,
-        limit_choices_to=~models.Q(name__in=["Root"]),
+    image_collection = StreamField(
+        [
+            ("gallery", ImageGalleryBlock(label="Галерея")),
+        ],
         null=True,
         blank=True,
-        on_delete=models.SET_NULL,
+        max_num=1,
+        use_json_field=True,
+        collapsed=True,
         verbose_name="Коллекция изображений",
     )
     video_collection = StreamField(
@@ -452,7 +455,7 @@ class RoomPage(BaseObject):
         FieldPanel("introduction"),
         FieldPanel("body"),
         FieldPanel("image"),
-        FieldPanel("collection"),
+        FieldPanel("image_collection"),
         FieldPanel("video_collection"),
     ]
 
@@ -493,7 +496,7 @@ class GalleryPage(BaseObject):
         FieldPanel("introduction"),
         FieldPanel("body"),
         FieldPanel("image"),
-        FieldPanel("collection"),
+        FieldPanel("image_collection"),
         FieldPanel("video_collection"),
         FieldPanel("features"),
     ]

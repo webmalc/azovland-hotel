@@ -2,7 +2,7 @@ from django.utils.functional import cached_property
 from wagtail.blocks import (
     CharBlock,
     ChoiceBlock,
-    IntegerBlock,
+    FloatBlock,
     ListBlock,
     RichTextBlock,
     StreamBlock,
@@ -39,11 +39,11 @@ class IconTextItem(StructBlock):
         help_text="Например: fa-bed, fa-wifi. https://fontawesome.com/search?q=cat&ic=free-collection",
         required=False,
     )
-    counter = IntegerBlock(
+    counter = FloatBlock(
         max_length=255,
         label="Счетчик",
         required=False,
-        min_value=1,
+        min_value=0,
     )
 
     class Meta:

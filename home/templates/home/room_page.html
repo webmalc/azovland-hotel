@@ -43,15 +43,15 @@
       <div class="col-12">
         <div id="roomsPhotos" class="roomsSingleGrid -type-1">
 
-          {% collection_images page.collection as photos %}
-          {% for photo in photos|slice:"0:5" %}
+          {% gallery_images page.image_collection 5 as items %}
+          {% for item in items %}
 
-            {% image photo width-1920 as full_img %}
+            {% image item.image width-1920 as full_img %}
             <a href="{{ full_img.url }}" class="baseCard -type-2">
               {% if forloop.counter == 1 %}
-                {% image photo fill-840x570%}
+                {% image item.image fill-840x570 alt=item.alt_text title=item.alt_text %}
               {% else %}
-                {% image photo fill-270x280%}
+                {% image item.image fill-270x280 alt=item.alt_text title=item.alt_text %}
               {% endif %}
             </a>
           {% endfor %}

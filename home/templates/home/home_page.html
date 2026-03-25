@@ -187,7 +187,7 @@
                 <div class="row y-gap-30 justify-between">
                     {% for block in page.stats %}
                       <div data-split="lines" data-anim-child="split-lines delay-2" class="col-lg-auto col-6">
-                        <h3 class="text-92 lg:text-60 sm:text-40 stats-header">{{ block.value.counter|intcomma }}</h3>
+                        <h3 class="text-92 lg:text-60 sm:text-40 stats-header">{{ block.value.counter|floatformat|intcomma }}</h3>
                           <div class="uppercase lh-1 mt-20">{{ block.value.text }}</div>
                       </div>
                     {% endfor %}
