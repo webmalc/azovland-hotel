@@ -31,3 +31,15 @@
         name: git
         state: present
       tags: [git, packages]
+
+    - name: install pipx
+      ansible.builtin.package:
+        name: pipx
+        state: present
+      tags: [pip, packages]
+
+    - name: install ranger
+      community.general.pipx:
+        name: ranger-fm
+        state: present
+      tags: [ranger, pip, packages]

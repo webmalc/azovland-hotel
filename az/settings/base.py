@@ -223,6 +223,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "az"
+WAGTAILDOCS_SERVE_METHOD = "redirect"
 
 # Search
 # https://docs.wagtail.org/en/stable/topics/search/backends.html
@@ -250,6 +251,8 @@ WAGTAILDOCS_EXTENSIONS = [
     "zip",
     "mp4",
 ]
+WAGTAILIMAGES_MAX_UPLOAD_SIZE = 20 * 1024 * 1024
+WAGTAILIMAGES_EXTENSIONS = ["avif", "gif", "jpg", "jpeg", "png", "webp", "heic"]
 
 LOGGING = {
     "version": 1,

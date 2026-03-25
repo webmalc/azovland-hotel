@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
     env_file: web/web.env
     environment:
-      - CSRF_TRUSTED_ORIGINS=http://127.0.0.1:${NGINX_PORT:-8080},http://localhost:${NGINX_PORT:-8080}
+      - CSRF_TRUSTED_ORIGINS=http://127.0.0.1:${NGINX_PORT:-8080},http://localhost:${NGINX_PORT:-8080},${CSRF_TRUSTED_ORIGINS-}
     networks:
       - azovland_network
     volumes:
