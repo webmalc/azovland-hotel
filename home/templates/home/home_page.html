@@ -60,12 +60,12 @@
                 </div>
             </div>
 
-            {% collection_images page.featured_photos_1 as featured_photos_1 %}
-            {% for photo in featured_photos_1|slice:"0:4" %}
+            {% gallery_images page.featured_photos_middle 4 as header_images %}
+            {% for item in header_images %}
             <div class="swiper-slide">
                 <div class="hero__slide">
                     <div class="hero__bg" data-anim-child="img-right cover-white delay-2">
-                      {% image photo width-1920 %}
+                      {% image item.image width-1920 alt=item.alt_text %}
                     </div>
 
                     <div class="hero__content">
@@ -121,18 +121,23 @@
         <div data-anim-child="slide-up delay-1" class="about__backTitle text-sec text-light-2">АЗОВСКИЙ</div>
 
 
-        {% collection_images page.featured_photos_2|slice:"3" as featured_photos_2 %}
+
+        {% gallery_images page.featured_photos_middle 3 as middle_images %}
         <div class="about__images">
             <div data-anim-child="img-right cover-white delay-2">
-                {% image featured_photos_2|get_item:0 fill-327x400 class="rounded-16" %}
+                {% with item=middle_images|get_item:0 %}
+                {% image item.image fill-327x400 class="rounded-16" alt=item.alt_text  %}
+                {% endwith %}
             </div>
-
             <div data-anim-child="img-right cover-white delay-4">
-                {% image featured_photos_2|get_item:1 fill-387x519 class="rounded-16" %}
+                {% with item=middle_images|get_item:1 %}
+                {% image item.image fill-387x519 class="rounded-16" alt=item.alt_text  %}
+                {% endwith %}
             </div>
-
             <div data-anim-child="img-right cover-white delay-6">
-                {% image featured_photos_2|get_item:2 fill-327x400 class="rounded-16" %}
+                {% with item=middle_images|get_item:2 %}
+                {% image item.image fill-327x400 class="rounded-16" alt=item.alt_text  %}
+                {% endwith %}
             </div>
         </div>
 
@@ -515,13 +520,14 @@
         </div>
 
         <div class="row x-gap-10 y-gap-10 pt-100 sm:pt-50">
-            {% collection_images page.featured_photos_3 as featured_photos_3 %}
-            {% for photo in featured_photos_3|slice:"5" %}
-            <div class="w-1/5 md:w-1/2 sm:w-1/1">
-              <a href="{{ settings.social_vk }}" class="ratio ratio-1:1" data-anim-child="img-right cover-white delay-2">
-                    {% image photo fill-293x301 class="img-ratio rounded-16" %}
-                </a>
-            </div>
+
+            {% gallery_images page.featured_photos_footer 5 as footer_images %}
+            {% for item in footer_images %}
+                <div class="w-1/5 md:w-1/2 sm:w-1/1">
+                  <a href="{{ settings.social_vk }}" class="ratio ratio-1:1" data-anim-child="img-right cover-white delay-2">
+                    {% image item.image fill-293x301 class="img-ratio rounded-16" alt=item.alt_text %}
+                    </a>
+                </div>
             {% endfor %}
         </div>
     </div>

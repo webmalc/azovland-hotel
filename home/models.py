@@ -14,7 +14,7 @@ from wagtail.fields import StreamField
 from wagtail.models import Collection, Page
 from wagtailcache.cache import WagtailCacheMixin
 
-from .blocks import BaseStreamBlock, IconTextItem, ReviewBlock
+from .blocks import BaseStreamBlock, IconTextItem, ImageGalleryBlock, ReviewBlock
 
 
 class TransparentMenuMixin:
@@ -138,32 +138,38 @@ class HomePage(WagtailCacheMixin, Page, TransparentMenuMixin):
         verbose_name="Отзывы клиентов",
         collapsed=True,
     )
-    featured_photos_1 = models.ForeignKey(
-        Collection,
-        limit_choices_to=~models.Q(name__in=["Root"]),
+    featured_photos_header = StreamField(
+        [
+            ("gallery", ImageGalleryBlock(label="Галерея")),
+        ],
         null=True,
         blank=True,
-        related_name="+",
-        on_delete=models.SET_NULL,
-        verbose_name="Избранные изображения 1",
+        max_num=1,
+        use_json_field=True,
+        collapsed=True,
+        verbose_name="Изображения в шапке",
     )
-    featured_photos_2 = models.ForeignKey(
-        Collection,
-        limit_choices_to=~models.Q(name__in=["Root"]),
+    featured_photos_middle = StreamField(
+        [
+            ("gallery", ImageGalleryBlock(label="Галерея")),
+        ],
         null=True,
         blank=True,
-        related_name="+",
-        on_delete=models.SET_NULL,
-        verbose_name="Избранные изображения 2",
+        max_num=1,
+        use_json_field=True,
+        collapsed=True,
+        verbose_name="Изображения под шапкой",
     )
-    featured_photos_3 = models.ForeignKey(
-        Collection,
-        limit_choices_to=~models.Q(name__in=["Root"]),
+    featured_photos_footer = StreamField(
+        [
+            ("gallery", ImageGalleryBlock(label="Галерея")),
+        ],
         null=True,
         blank=True,
-        related_name="+",
-        on_delete=models.SET_NULL,
-        verbose_name="Избранные изображения 3",
+        max_num=1,
+        use_json_field=True,
+        collapsed=True,
+        verbose_name="Изображения в подвале",
     )
 
     # panels
@@ -179,9 +185,9 @@ class HomePage(WagtailCacheMixin, Page, TransparentMenuMixin):
     ]
     other_panels = [
         FieldPanel("reviews"),
-        FieldPanel("featured_photos_1"),
-        FieldPanel("featured_photos_2"),
-        FieldPanel("featured_photos_3"),
+        FieldPanel("featured_photos_header"),
+        FieldPanel("featured_photos_middle"),
+        FieldPanel("featured_photos_footer"),
     ]
     sections_panels = [
         FieldPanel("featured_section_1_title"),

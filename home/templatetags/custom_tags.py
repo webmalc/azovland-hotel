@@ -54,6 +54,26 @@ def collection_images(collection):
 
 
 @register.simple_tag
+def gallery_images(gallery, limit: int | None = None):
+    if not gallery:
+        return []
+
+    items = []
+    for block in gallery:
+        if block.block_type == "gallery":
+            for item in block.value["images"]:
+                alt_text = item["alt_text"]
+                image = item["image"]
+                if not alt_text:
+                    alt_text = image.description or image.title
+
+                items.append({"image": image, "alt_text": alt_text})
+                if limit and len(items) >= limit:
+                    break
+    return items
+
+
+@register.simple_tag
 def collection_images_recursive(collection):
     """
     Returns images from collection AND all its sub-collections.

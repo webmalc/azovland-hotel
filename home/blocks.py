@@ -145,6 +145,40 @@ class BlockQuote(StructBlock):
         label = "Цитата"
 
 
+class ImageGalleryBlock(StructBlock):
+    """
+    Gallery with a specific purpose/name.
+    """
+
+    images = ListBlock(
+        StructBlock(
+            [
+                (
+                    "image",
+                    ImageChooserBlock(
+                        required=True,
+                        label="Изображение",
+                    ),
+                ),
+                (
+                    "alt_text",
+                    CharBlock(
+                        required=False,
+                        max_length=255,
+                        label="Alt-текст",
+                    ),
+                ),
+            ]
+        ),
+        min_num=1,
+        label="Изображения",
+    )
+
+    class Meta:
+        icon = "images"
+        template = None
+
+
 class BaseStreamBlock(StreamBlock):
     heading_block = HeadingBlock()
     paragraph_block = RichTextBlock(
