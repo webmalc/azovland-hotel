@@ -51,7 +51,7 @@ class HomePage(WagtailCacheMixin, Page, TransparentMenuMixin):
         blank=True,
         on_delete=models.RESTRICT,
         related_name="+",
-        verbose_name="Фоновое видео (большое)",
+        verbose_name="Фоновое видео (большое) 1980x1080",
     )
     bg_video_size_m = models.ForeignKey(
         Document,
@@ -59,7 +59,7 @@ class HomePage(WagtailCacheMixin, Page, TransparentMenuMixin):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name="Фоновое видео (среднее)",
+        verbose_name="Фоновое видео (среднее) 1280x800",
     )
     bg_video_size_s = models.ForeignKey(
         Document,
@@ -67,7 +67,7 @@ class HomePage(WagtailCacheMixin, Page, TransparentMenuMixin):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name="Фоновое видео (малое)",
+        verbose_name="Фоновое видео (малое) 480x800",
     )
 
     # features
