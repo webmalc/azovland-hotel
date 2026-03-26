@@ -60,6 +60,56 @@
                 </div>
             </div>
 
+            {% if page.bg_additional_video_size_l %}
+            <div class="swiper-slide">
+                <div class="hero__slide">
+                    <div class="hero__bg" data-anim-child="img-right cover-white delay-2">
+                        <video loading="lazy"  onloadedmetadata="this.muted=true" autoplay="" loop="" muted preload="auto" class="video" playsinline >
+                              <source src="{{ page.bg_additional_video_size_s.file.url }}" 
+                                      type="video/mp4" 
+                                      media="(max-width: 480px)">
+                              
+                              <source src="{{ page.bg_additional_video_size_m.file.url }}" 
+                                      type="video/mp4" 
+                                      media="(min-width: 481px) and (max-width: 1280px)">
+                              
+                              <source src="{{ page.bg_additional_video_size_l.file.url }}" 
+                                      type="video/mp4" 
+                                      media="(min-width: 1281px)">
+                        </video>
+                    </div>
+
+                    <div class="hero__content">
+                        <div class="container">
+                            <div data-anim-wrap class="row justify-center">
+                                <div class="col-auto">
+                                    <div class="hero__content text-center">
+                                        <div data-split="lines" data-anim-child="split-lines delay-3">
+                                            <div class="hero__subtitle text-white">
+                                              {{ page.header_1|upper }}
+                                            </div>
+                                            <h1 class="hero__title text-white">
+                                                {{ page.text_1|title|linebreaksbr }}
+                                            </h1>
+                                        </div>
+
+                                        <div data-anim-child="slide-up delay-6">
+                                            <button
+                                                onclick="location.href='{% booking_link %}'"
+                                                class="button -md -type-2 bg-white -accent-1 rounded-200 mt-50 md:mt-30 mx-auto"
+                                            >
+                                            {{settings.book_link_text}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             {% gallery_images page.featured_photos_middle 4 as header_images %}
             {% for item in header_images %}
             <div class="swiper-slide">

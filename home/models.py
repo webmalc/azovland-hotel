@@ -69,6 +69,30 @@ class HomePage(WagtailCacheMixin, Page, TransparentMenuMixin):
         related_name="+",
         verbose_name="Фоновое видео (малое) 480x800",
     )
+    bg_additional_video_size_l = models.ForeignKey(
+        Document,
+        null=True,
+        blank=True,
+        on_delete=models.RESTRICT,
+        related_name="+",
+        verbose_name="Дополнительное фоновое видео (большое) 1980x1080",
+    )
+    bg_additional_video_size_m = models.ForeignKey(
+        Document,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Дополнительное фоновое видео (среднее) 1280x800",
+    )
+    bg_additional_video_size_s = models.ForeignKey(
+        Document,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name="Дополнительное фоновое видео (малое) 480x800",
+    )
 
     # features
     stats = StreamField(
@@ -177,6 +201,9 @@ class HomePage(WagtailCacheMixin, Page, TransparentMenuMixin):
         FieldPanel("bg_video_size_l"),
         FieldPanel("bg_video_size_m"),
         FieldPanel("bg_video_size_s"),
+        FieldPanel("bg_additional_video_size_l"),
+        FieldPanel("bg_additional_video_size_m"),
+        FieldPanel("bg_additional_video_size_s"),
     ]
     features_panels = [
         FieldPanel("stats"),
