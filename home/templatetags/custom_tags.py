@@ -119,3 +119,31 @@ def second_half(value):
         return value[mid:]
     except (TypeError, AttributeError):
         return []
+
+
+@register.filter
+def ru_plural(value, forms):
+    """
+    Russian pluralization.
+    """
+    try:
+        n = abs(int(value))
+    except (TypeError, ValueError):
+        return str(forms)
+
+    parts = [part.strip() for part in str(forms).split(",")]
+    if len(parts) != 3:  # noqa
+        return str(forms)
+
+    one, few, many = parts
+
+    n10 = n % 10
+    n100 = n % 100
+
+    if n10 == 1 and n100 != 11:  # noqa
+        return one
+
+    if 2 <= n10 <= 4 and not 12 <= n100 <= 14:  # noqa
+        return few
+
+    return many

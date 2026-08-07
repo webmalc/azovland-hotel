@@ -15,20 +15,24 @@
         <h1 data-anim-child="slide-up delay-1" class="text-64 md:text-40">{{ page.title }}{{ room }}</h1>
         <div data-anim-child="slide-up delay-2" class="d-flex x-gap-50 md:x-gap-20 pt-20">
 
+          {% if page.room_size %}
           <div class="d-flex items-center text-accent-1">
             <i class="icon-size text-20 mr-10"></i>
             {{ page.room_size }}
           </div>
+          {% endif %}
 
           <div class="d-flex items-center text-accent-1">
             <i class="icon-guest text-20 mr-10"></i>
-            {{ page.adults }}+{{ page.children }} 
+            {{ page.adults }}{% if page.children %}+{{page.children}}{% else %} {{ page.adults|ru_plural:"человек,человека,человек" }}{% endif %}
           </div>
 
+          {% if page.beds %}
           <div class="d-flex items-center text-accent-1">
             <i class="icon-bed-2 text-20 mr-10"></i>
             {{ page.beds }}
           </div>
+          {% endif %}
         </div>
       </div>
 
@@ -276,20 +280,24 @@
 
                   <div class="d-flex x-gap-30 pt-30">
 
+                    {% if room.room_size %}
                     <div class="d-flex items-center text-accent-1">
                       <i class="icon-size text-20 mr-10"></i>
-                      {{ room.size }}
+                      {{ room.room_size }}
                     </div>
+                    {% endif %}
 
                     <div class="d-flex items-center text-accent-1">
                       <i class="icon-guest text-20 mr-10"></i>
-                      {{ room.adults }}+{{room.children}}
+                      {{ room.adults }}{% if room.children %}+{{room.children}}{% else %} {{ room.adults|ru_plural:"человек,человека,человек" }}{% endif %}
                     </div>
 
+                    {% if room.beds %}
                     <div class="d-flex items-center text-accent-1">
                       <i class="icon-bed-2 text-20 mr-10"></i>
                       {{ room.beds }}
                     </div>
+                    {% endif %}
                   </div>
                 </div>
               </a>

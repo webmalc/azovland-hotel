@@ -82,22 +82,26 @@
 
             <div class="d-flex x-gap-20 y-gap-10 pt-30 text-accent-1">
 
+              {% if child.room_size %}
               <div class="d-flex items-center">
                 <i class="icon-size d-flex text-20 mr-10"></i>
                 <div>{{ child.room_size }}</div>
               </div>
+              {% endif %}
 
               <div class="d-flex items-center">
                 <i class="icon-guest d-flex text-20 mr-10"></i>
                 <div>
-                  {{ child.adults }}+{{ child.children }} 
+                  {{ child.adults }}{% if child.children %}+{{child.children}}{% else %} {{ child.adults|ru_plural:"человек,человека,человек" }}{% endif %}
                 </div>
               </div>
 
+              {% if child.beds %}
               <div class="d-flex items-center">
                 <i class="icon-bed-2 d-flex text-20 mr-10"></i>
                 <div>{{ child.beds }}</div>
               </div>
+              {% endif %}
 
             </div>
 

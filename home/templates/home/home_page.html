@@ -110,7 +110,7 @@
             </div>
             {% endif %}
 
-            {% gallery_images page.featured_photos_middle 4 as header_images %}
+            {% gallery_images page.featured_photos_header 4 as header_images %}
             {% for item in header_images %}
             <div class="swiper-slide">
                 <div class="hero__slide">
@@ -303,20 +303,24 @@
                               <h3 class="roomCard__title lh-065 text-40 md:text-24 text-white">{{ child.title }}</h3>
 
                                 <div class="d-flex x-gap-20 pt-30">
+                                    {% if child.room_size %}
                                     <div class="d-flex items-center text-white">
                                         <i class="icon-size text-20 mr-10"></i>
                                         {{ child.room_size }}
                                     </div>
+                                    {% endif %}
 
                                     <div class="d-flex items-center text-white">
                                         <i class="icon-guest text-20 mr-10"></i>
-                                        {{ child.adults }}+{{ child.children }} 
+                                        {{ child.adults }}{% if child.children %}+{{child.children}}{% else %} {{ child.adults|ru_plural:"человек,человека,человек" }}{% endif %}
                                     </div>
 
+                                    {% if child.beds %}
                                     <div class="d-flex items-center text-white">
                                         <i class="icon-bed-2 text-20 mr-10"></i>
                                         {{ child.beds }}
                                     </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </a>

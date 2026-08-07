@@ -457,8 +457,8 @@ class RoomListPage(BaseListPage):
 
 class RoomPage(BaseObject):
     room_size = models.TextField(
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         verbose_name="Размер номера",
         help_text="Пример: 14-20м2",
     )
@@ -468,14 +468,14 @@ class RoomPage(BaseObject):
         verbose_name="Количество взрослых",
     )
     children = models.PositiveIntegerField(
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         default=0,
         verbose_name="Количество детей",
     )
     beds = models.PositiveIntegerField(
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         verbose_name="Количество спальных мест",
     )
     content_panels = Page.content_panels + [
