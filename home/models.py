@@ -290,6 +290,13 @@ class GenericSettings(BaseGenericSetting):
     social_rutube = models.URLField(verbose_name="Rutube URL", blank=True)
     social_yandex = models.URLField(verbose_name="Yandex URL", blank=True)
 
+    room_global_features_1 = StreamField(
+        [("feature", IconTextItem(label="Особенность"))],
+        blank=True,
+        verbose_name="Комплекс «Всё включено»",
+        collapsed=True,
+    )
+
     panels = [
         MultiFieldPanel(
             [
@@ -309,6 +316,15 @@ class GenericSettings(BaseGenericSetting):
             "Контакты",
         )
     ]
+    room_panels = [
+        FieldPanel("room_global_features_1"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(panels, heading="Общие"),
+            ObjectList(room_panels, heading="Номера"),
+        ]
+    )
 
     class Meta:
         verbose_name = "Проект"
