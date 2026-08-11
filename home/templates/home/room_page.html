@@ -72,7 +72,7 @@
 
         {% if page.features %}
         <div class="line -horizontal bg-border mt-50 mb-50"></div>
-        <h2 class="text-40">Комплекс услуг «Всё включено»</h2>
+        <h2 class="text-40">Преимущества</h2>
         <div class="row x-gap-50 y-gap-20 justify-between pt-40">
           <div class="col-sm-5">
             <div class="row y-gap-30">
@@ -93,6 +93,42 @@
             <div class="row y-gap-30">
 
               {% for block in page.features|first_half %}
+                <div class="col-12">
+                  <div class="d-flex items-center">
+                    <i class="{{ block.value.icon }} room-icon text-30 mr-30"></i>
+                    <div>{{ block.value.text|capfirst }}</div>
+                  </div>
+                </div>
+              {% endfor %}
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if page.additional_features %}
+        <div class="line -horizontal bg-border mt-50 mb-50"></div>
+        <h2 class="text-40">Удобства и услуги</h2>
+        <div class="row x-gap-50 y-gap-20 justify-between pt-40">
+          <div class="col-sm-5">
+            <div class="row y-gap-30">
+
+              {% for block in page.additional_features|second_half %}
+                <div class="col-12">
+                  <div class="d-flex items-center">
+                    <i class="{{ block.value.icon }} room-icon text-30 mr-30"></i>
+                    <div>{{ block.value.text|capfirst }}</div>
+                  </div>
+                </div>
+              {% endfor %}
+
+            </div>
+          </div>
+
+          <div class="col-sm-5">
+            <div class="row y-gap-30">
+
+              {% for block in page.additional_features|first_half %}
                 <div class="col-12">
                   <div class="d-flex items-center">
                     <i class="{{ block.value.icon }} room-icon text-30 mr-30"></i>

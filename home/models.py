@@ -478,6 +478,12 @@ class RoomPage(BaseObject):
         blank=True,
         verbose_name="Количество спальных мест",
     )
+    additional_features = StreamField(
+        [("feature", IconTextItem(label="Особенность"))],
+        blank=True,
+        verbose_name="Удобства и услуги",
+        collapsed=True,
+    )
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
         FieldPanel("body"),
@@ -485,13 +491,13 @@ class RoomPage(BaseObject):
         FieldPanel("image_collection"),
         FieldPanel("video_collection"),
     ]
-
     room_panels = [
         FieldPanel("room_size"),
         FieldPanel("adults"),
         FieldPanel("children"),
         FieldPanel("beds"),
-        FieldPanel("features"),
+        FieldPanel("features", heading="Преимущества"),
+        FieldPanel("additional_features", heading=" Удобства и услуги"),
     ]
 
     edit_handler = TabbedInterface(
